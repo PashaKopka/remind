@@ -1,3 +1,4 @@
+{% load filter_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,25 @@
     <li>
         <h4>{{ note.title }}</h4>
         <p>{{ note.text }}</p>
+    </li>
+    {% endfor %}
+
+    {% for list in lists_list %}
+    <li>
+        <h4>{{ list.title }}</h4>
+        {% with list.list|split:"%%_next_%%" as array %}
+            {% for string in array %}
+            <div>
+                {% if string|slice:":6" == 'done=1' %}
+                    <input type="checkbox" checked>
+                    <label>{{ string|slice:"6:" }}</label>
+                {% else %}
+                    <input type="checkbox">
+                    <label>{{ string|slice:"6:" }}</label>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endwith %}
     </li>
     {% endfor %}
 </ul>

@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="e0619518-e648-4e0a-8898-9f19e9185c0c">
+        <schema name="main" object-types="table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="e0619518-e648-4e0a-8898-9f19e9185c0c">
@@ -42,6 +46,9 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.auth_user_groups" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.user_page_list" active-filter-id="cf6ba0bc-247d-4f7d-9f42-d60750d01c35">
+      <filter id="cf6ba0bc-247d-4f7d-9f42-d60750d01c35" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.sqlite_sequence" active-filter-id="" />
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.auth_group" active-filter-id="" />
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.django_session" active-filter-id="EMPTY_FILTER" />
