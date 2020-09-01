@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Note
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
@@ -25,3 +25,11 @@ class SignInForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class AddNoteForm(forms.ModelForm):
+    """Note Form"""
+
+    class Meta:
+        model = Note
+        fields = ('title', 'text', 'files', 'remind', 'deadline')

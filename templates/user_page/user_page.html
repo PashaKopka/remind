@@ -9,8 +9,11 @@
 
 <style>
     div{
-        background: #B8B7B7
+        background: #B8B7B7;
+        padding: 5px;
     }
+
+
 
 </style>
 
@@ -31,6 +34,32 @@
 
 </div>
 <br>
+
+<div>
+
+    <form action="{% url 'add_note' request.user.get_username %}" method="post">
+        {% csrf_token %}
+
+        <label for="title">Title</label><br>
+        <input type="text" id="title" name="title"><br>
+
+        <label for="contactcomment" class="editContent">Ваш комментарий</label><br>
+        <textarea rows="5" name="text" id="contactcomment" required=""></textarea><br>
+
+        <label for="files">Files</label><br>
+        <input type="file" id="files" name="files"><br>
+
+        <label for="remind">Date of remind</label><br>
+        <input type="datetime-local" id="remind" name="remind"><br>
+
+        <label for="deadline">Deadline</label><br>
+        <input type="date" id="deadline" name="deadline"><br>
+
+
+        <input type="submit">
+    </form>
+
+</div>
 
 <div>
     <ul>

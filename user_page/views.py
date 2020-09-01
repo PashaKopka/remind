@@ -1,12 +1,14 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView as djLoginView
 from django.contrib.auth.views import LogoutView as djLogoutView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
 from .models import Note, List, User
-from .forms import LoginForm, SignInForm
+from .forms import LoginForm, SignInForm, AddNoteForm
 
 
 class ProfileView(View):
@@ -48,3 +50,18 @@ class SignInView(CreateView):
 
 class LogoutView(djLogoutView):
     next_page = reverse_lazy('login')
+
+
+class AddNoteView(View):
+    """Add Note"""
+
+    def post(self, request, username):
+        form = AddNoteForm(request.POST)
+        print('\n', form.errors, '\n')
+        print(User.objects.all())
+        if form.is_valid():
+            print('net')
+            form = form.save(commit=False)
+            form.user = User.objects.get_by_natural_key(username=username)
+            form.save()
+        return redirect('profile')
