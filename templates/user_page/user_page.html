@@ -7,35 +7,53 @@
 </head>
 <body>
 
+<style>
+    div{
+        background: #B8B7B7
+    }
+
+</style>
+
+<p>{{ request.user }}</p>
+
 <a href="{% url 'logout' %}">Logout</a>
 
-<ul>
-    {% for note in note_list %}
-    <li>
-        <h4>{{ note.title }}</h4>
-        <p>{{ note.text }}</p>
-    </li>
-    {% endfor %}
+<div>
 
-    {% for list in lists_list %}
-    <li>
-        <h4>{{ list.title }}</h4>
-        {% with list.list|split:"%%_next_%%" as array %}
+    <ul>
+        {% for note in note_list %}
+        <li>
+            <h4>{{ note.title }}</h4>
+            <p>{{ note.text }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+<br>
+
+<div>
+    <ul>
+        {% for list in lists_list %}
+        <li>
+            <h4>{{ list.title }}</h4>
+            {% with list.list|split:"%%_next_%%" as array %}
             {% for string in array %}
             <div>
                 {% if string|slice:":6" == 'done=1' %}
-                    <input type="checkbox" checked>
-                    <label>{{ string|slice:"6:" }}</label>
+                <input type="checkbox" checked>
+                <label>{{ string|slice:"6:" }}</label>
                 {% else %}
-                    <input type="checkbox">
-                    <label>{{ string|slice:"6:" }}</label>
+                <input type="checkbox">
+                <label>{{ string|slice:"6:" }}</label>
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
             </div>
-        {% endwith %}
-    </li>
-    {% endfor %}
-</ul>
+            {% endwith %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 
 </body>

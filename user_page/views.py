@@ -9,12 +9,13 @@ from .models import Note, List, User
 from .forms import LoginForm, SignInForm
 
 
-class NotesView(View):
+class ProfileView(View):
     """List of films"""
 
     def get(self, request):
-        notes = Note.objects.all()
-        lists = List.objects.all()
+        user = request.user
+        notes = Note.objects.filter(user=user)
+        lists = List.objects.filter(user=user)
         return render(request, 'user_page/user_page.html', {'note_list': notes, 'lists_list': lists})
 
 
@@ -22,7 +23,7 @@ class LoginView(djLoginView):
     """Login"""
     template_name = 'user_page/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('notes')
+    success_url = reverse_lazy('profile')
 
     def get_success_url(self):
         return self.success_url
@@ -33,7 +34,7 @@ class SignInView(CreateView):
     model = User
     template_name = 'user_page/signin.html'
     form_class = SignInForm
-    success_url = reverse_lazy('notes')
+    success_url = reverse_lazy('profile')
     success_msg = 'Success'
 
     def form_valid(self, form):
