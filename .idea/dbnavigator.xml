@@ -27,6 +27,9 @@
       <connection connection-id="e0619518-e648-4e0a-8898-9f19e9185c0c">
         <schema name="main" object-types="table, view" />
       </connection>
+      <connection connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042">
+        <schema name="main" object-types="constraint, index, table, view, column, dataset trigger" />
+      </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
@@ -51,6 +54,9 @@
     </filter-actions>
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.sqlite_sequence" active-filter-id="" />
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.auth_group" active-filter-id="" />
+    <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.user_page_user" active-filter-id="">
+      <filter id="7978c7cc-0dd9-4365-bd88-85d2807f8edc" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    </filter-actions>
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.django_session" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" dataset="main.user_page_note" active-filter-id="EMPTY_FILTER" />
   </component>
@@ -163,7 +169,7 @@
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" active="false">
+      <connection id="e100a4d1-c0c1-4972-9adf-9e6de3d54042" active="true">
         <database>
           <name value="Connection" />
           <description value="" />

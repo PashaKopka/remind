@@ -9,6 +9,12 @@ class NoteAdmin(admin.ModelAdmin):
     # readonly_fields = ('style',)
 
 
-admin.site.register(User)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    """Notes"""
+    # readonly_fields = ('id', 'username', 'email', 'password',)
+    # list_display = ('theme', 'default_style_note')
+
+
 admin.site.register(Project)
 admin.site.register(List)
