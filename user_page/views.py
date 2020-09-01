@@ -1,14 +1,12 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView as djLoginView
+from django.contrib.auth.views import LogoutView as djLogoutView
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
 from .models import Note, List, User
 from .forms import LoginForm, SignInForm
-
-
-def userpage(request):
-    return render(request, 'user_page/user_page.html')
 
 
 class NotesView(View):
@@ -37,3 +35,15 @@ class SignInView(CreateView):
     form_class = SignInForm
     success_url = reverse_lazy('notes')
     success_msg = 'Success'
+
+    def form_valid(self, form):
+        form_valid = super().form_valid(form)
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        aut_user = authenticate(username=username, password=password)
+        login(self.request, aut_user)
+        return form_valid
+
+
+class LogoutView(djLogoutView):
+    next_page = reverse_lazy('login')
