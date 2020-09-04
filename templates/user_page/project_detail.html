@@ -1,0 +1,42 @@
+{% load filter_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.title }}</title>
+</head>
+<body>
+
+<h1>{{ project.title }}</h1>
+<h2>Notes:</h2>
+{% for note in project.note.all %}
+<div>
+    <h4>{{ note.title }}</h4>
+    <h5>{{ note.text }}</h5>
+</div>
+{% endfor %}
+
+<h2>Lists:</h2>
+{% for list in project.list.all %}
+<div>
+    <h4>{{ list.title }}</h4>
+    {% with list.list|split:"%%_next_%%" as array %}
+                <div>
+                    {% for string in array %}
+                        {% if string == '' %}
+                        {% elif string|slice:":6" == 'done=1' %}
+                            <input type="checkbox" checked>
+                            <label>{{ string|slice:"6:" }}</label><br>
+                        {% else %}
+                            <input type="checkbox">
+                            <label>{{ string|slice:"6:" }}</label><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endwith %}
+</div>
+{% endfor %}
+
+</body>
+</html>

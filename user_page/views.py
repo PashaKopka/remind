@@ -112,3 +112,11 @@ class AddProjectView(View):
                     form.list.add(List.objects.get(id=int(list_id)))
 
         return redirect('projects')
+
+
+class ProjectDetailView(View):
+    """Project View"""
+
+    def get(self, request, id):
+        project = Project.objects.get(id=id)
+        return render(request, 'user_page/project_detail.html', {'project': project})
