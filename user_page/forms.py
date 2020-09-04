@@ -1,5 +1,7 @@
 from django import forms
-from .models import User, Note
+from django.forms import DateInput, DateTimeInput
+
+from .models import User, Note, List, Project
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
@@ -29,7 +31,29 @@ class SignInForm(forms.ModelForm):
 
 class AddNoteForm(forms.ModelForm):
     """Note Form"""
+    remind = forms.DateTimeField(required=False)
+    deadline = forms.DateField(required=False)
 
     class Meta:
         model = Note
         fields = ('title', 'text', 'files', 'remind', 'deadline')
+
+
+class AddListForm(forms.ModelForm):
+    """Note Form"""
+    remind = forms.DateTimeField(required=False)
+    deadline = forms.DateField(required=False)
+
+    class Meta:
+        model = List
+        fields = ('title', 'list', 'remind', 'deadline')
+
+
+class AddProjectForm(forms.ModelForm):
+    """Project Form"""
+    every_day_remind = forms.DateTimeField(required=False)
+    deadline = forms.DateField(required=False)
+
+    class Meta:
+        model = Project
+        fields = ('title', 'every_day_remind', 'deadline')

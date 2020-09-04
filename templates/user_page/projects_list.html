@@ -1,0 +1,69 @@
+{% load filter_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+</head>
+<body>
+
+<style>
+    .active_note{
+        background: grey;
+    }
+    .active_list{
+        background: grey;
+    }
+</style>
+
+<ul>
+    {% for project in projects %}
+     <li>{{ project.title }}</li>
+    {% endfor %}
+</ul>
+
+<form action="{% url 'add_project' request.user.get_username %}" method="post">
+    {% csrf_token %}
+
+    <label>Title</label><br>
+    <input type="text" name="title"><br>
+
+    <input id="note_id" type="hidden" name="note_id" value="">
+    <input id="list_id" type="hidden" name="list_id" value="">
+
+    <h2>Notes:</h2>
+    <ul>
+        {% for note in note_list %}
+        <li class="note" value="{{ note.id }}">
+            <h4>{{ note.title }}</h4>
+            <p>{{ note.text }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Notes:</h2>
+    <ul>
+        {% for list in lists_list %}
+        <li class="list" value="{{ list.id }}">
+            <h4>{{ list.title }}</h4>
+            <p>{{ list.list }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <label>Time of everyday remind</label><br>
+    <input type="datetime-local" name="every_day_remind"><br>
+
+    <label>Deadline</label><br>
+    <input type="date" name="deadline"><br>
+
+
+    <input id="submit" type="submit">
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

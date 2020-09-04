@@ -1,4 +1,5 @@
 {% load filter_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,20 @@
         background: #B8B7B7;
         padding: 5px;
     }
+    #add_list{
+        width: 100px;
+        height: 30px;
+        background: #F3BB33;
+        cursor: pointer;
+        margin: 5px;
+    }
+    #done_list{
+        width: 100px;
+        height: 30px;
+        background: #F3BB33;
+        cursor: pointer;
+        margin: 5px;
+    }
 
 
 
@@ -20,6 +35,7 @@
 <p>{{ request.user }}</p>
 
 <a href="{% url 'logout' %}">Logout</a>
+<a href="{% url 'projects' %}">Projects</a>
 
 <div>
 
@@ -37,52 +53,87 @@
 
 <div>
 
+    <h1>Note</h1>
+
     <form action="{% url 'add_note' request.user.get_username %}" method="post">
         {% csrf_token %}
 
-        <label for="title">Title</label><br>
-        <input type="text" id="title" name="title"><br>
+        <label>Title</label><br>
+        <input type="text" name="title"><br>
 
-        <label for="contactcomment" class="editContent">Ваш комментарий</label><br>
-        <textarea rows="5" name="text" id="contactcomment" required=""></textarea><br>
+        <label class="editContent">Ваш комментарий</label><br>
+        <textarea rows="5" name="text" required=""></textarea><br>
 
-        <label for="files">Files</label><br>
-        <input type="file" id="files" name="files"><br>
+        <label>Files</label><br>
+        <input type="file" name="files"><br>
 
-        <label for="remind">Date of remind</label><br>
-        <input type="datetime-local" id="remind" name="remind"><br>
+        <label>Date of remind</label><br>
+        <input type="datetime-local" name="remind"><br>
 
-        <label for="deadline">Deadline</label><br>
-        <input type="date" id="deadline" name="deadline"><br>
+        <label>Deadline</label><br>
+        <input type="date" name="deadline"><br>
 
 
         <input type="submit">
     </form>
 
 </div>
-
+<br>
 <div>
     <ul>
         {% for list in lists_list %}
         <li>
             <h4>{{ list.title }}</h4>
             {% with list.list|split:"%%_next_%%" as array %}
-            {% for string in array %}
-            <div>
-                {% if string|slice:":6" == 'done=1' %}
-                <input type="checkbox" checked>
-                <label>{{ string|slice:"6:" }}</label>
-                {% else %}
-                <input type="checkbox">
-                <label>{{ string|slice:"6:" }}</label>
-                {% endif %}
-                {% endfor %}
-            </div>
+                <div>
+                    {% for string in array %}
+                        {% if string == '' %}
+                        {% elif string|slice:":6" == 'done=1' %}
+                            <input type="checkbox" checked>
+                            <label>{{ string|slice:"6:" }}</label><br>
+                        {% else %}
+                            <input type="checkbox">
+                            <label>{{ string|slice:"6:" }}</label><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             {% endwith %}
         </li>
         {% endfor %}
     </ul>
 </div>
+<br>
+<div>
+
+    <h1>List</h1>
+
+    <form action="{% url 'add_list' request.user.get_username %}" method="post">
+        {% csrf_token %}
+
+        <label>Title</label><br>
+        <input type="text" name="title"><br>
+
+        <input id="list_input" type="hidden" name="list" value="">
+
+        <div id="list">
+
+        </div>
+        <div id="add_list">Add list</div>
+
+        <label>Date of remind</label><br>
+        <input type="datetime-local" name="remind"><br>
+
+        <label>Deadline</label><br>
+        <input type="date" name="deadline"><br>
+
+
+        <input id="done_list" type="submit">
+    </form>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 
 </body>

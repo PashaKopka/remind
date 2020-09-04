@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
-from .models import Note, List, User
-from .forms import LoginForm, SignInForm, AddNoteForm
+from .models import Note, List, User, Project
+from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm
 
 
 class ProfileView(View):
@@ -58,10 +58,57 @@ class AddNoteView(View):
     def post(self, request, username):
         form = AddNoteForm(request.POST)
         print('\n', form.errors, '\n')
-        print(User.objects.all())
         if form.is_valid():
-            print('net')
             form = form.save(commit=False)
             form.user = User.objects.get_by_natural_key(username=username)
             form.save()
         return redirect('profile')
+
+
+class AddListView(View):
+    """Add List"""
+
+    def post(self, request, username):
+        form = AddListForm(request.POST)
+        print('\n', form.errors, '\n')
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = User.objects.get_by_natural_key(username=username)
+            form.save()
+        return redirect('profile')
+
+
+class ProjectsView(View):
+    """List of projects"""
+
+    def get(self, request):
+        user = request.user
+        projects = Project.objects.filter(user=user)
+        notes = Note.objects.filter(user=user)
+        lists = List.objects.filter(user=user)
+        return render(request, 'user_page/projects_list.html',
+                      {'projects_list': projects, 'note_list': notes, 'lists_list': lists})
+
+
+class AddProjectView(View):
+    """Add List"""
+
+    def post(self, request, username):
+        form = AddProjectForm(request.POST)
+        print('\n', form.errors, '\n')
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = User.objects.get_by_natural_key(username=username)
+            # form.note = Note.objects.get(id=notes_list)
+            # form.list = List.objects.get(id=lists_list)
+            form.save()
+
+            for note_id in request.POST['note_id'].split(' '):
+                if note_id != '':
+                    form.note.add(Note.objects.get(id=int(note_id)))
+
+            for list_id in request.POST['list_id'].split(' '):
+                if list_id != '':
+                    form.list.add(List.objects.get(id=int(list_id)))
+
+        return redirect('projects')

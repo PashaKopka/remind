@@ -24,11 +24,14 @@ class Note(models.Model):
     text = models.TextField('Text')
     files = models.FileField('File', upload_to='user_files/', blank=True)
     style = models.CharField('Style', max_length=300, default=0, null=True)
-    remind = models.DateTimeField('Remind', default=0, null=True, blank=True)
-    deadline = models.DateTimeField('Deadline', default=0, null=True, blank=True)
+    remind = models.DateTimeField('Remind', default=0, null=True, blank=False)
+    deadline = models.DateTimeField('Deadline', default=0, null=True, blank=False)
     done = models.BooleanField('Done', default=False)
     draft = models.BooleanField('Draft', default=False)
     date_of_adding = models.DateTimeField('DateOfAdding', default=datetime.now)
+
+    def __str__(self):
+        return f"{self.user} - {self.title}"
 
     class Meta:
         verbose_name = "Note"
@@ -48,6 +51,9 @@ class List(models.Model):
     draft = models.BooleanField('Draft', default=False)
     date_of_adding = models.DateTimeField('DateOfAdding', default=datetime.now, null=True)
 
+    def __str__(self):
+        return f"{self.user} - {self.title}"
+
     class Meta:
         verbose_name = "List"
         verbose_name_plural = "Lists"
@@ -58,14 +64,14 @@ class Project(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, verbose_name='User', on_delete=models.SET_NULL, null=True)
     title = models.CharField('Title', max_length=100)
-    note = models.ManyToManyField(Note, verbose_name='Note')
-    list = models.ManyToManyField(List, verbose_name='List')
+    note = models.ManyToManyField(Note, verbose_name='Note', blank=False)
+    list = models.ManyToManyField(List, verbose_name='List', blank=False)
     style = models.CharField('Style', max_length=300)
-    every_day_remind = models.TimeField('EveryDayRemind', default=0, null=True)
-    deadline = models.DateTimeField('Deadline', default=0, null=True)
+    every_day_remind = models.TimeField('EveryDayRemind', default=0, null=True, blank=False)
+    deadline = models.DateTimeField('Deadline', default=0, null=True, blank=False)
     done = models.BooleanField('Done', default=False)
     draft = models.BooleanField('Draft', default=False)
-    date_of_adding = models.DateTimeField('DateOfAdding', default=0, null=True)
+    date_of_adding = models.DateTimeField('DateOfAdding', default=datetime.now, null=True)
 
     def __str__(self):
         return f"{self.user} - {self.title}"
