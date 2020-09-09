@@ -341,7 +341,7 @@ header{
 }
 .note{
 	width: 235px;
-	min-height: 100px;
+	min-height: 150px;
 	justify-self: center;
 
 	background-color: #F5F7FA;
