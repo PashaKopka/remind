@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView as djLoginView
 from django.contrib.auth.views import LogoutView as djLogoutView
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -15,10 +16,43 @@ class ProfileView(View):
     """List of films"""
 
     def get(self, request):
-        user = request.user
-        notes = Note.objects.filter(user=user)
-        lists = List.objects.filter(user=user)
-        return render(request, 'user_page/user_page.html', {'note_list': notes, 'lists_list': lists})
+        user = request.user.id
+        query = request.GET.get('q')
+        if query:
+            note_list = Note.objects.filter(
+                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user)
+            )
+        else:
+            note_list = Note.objects.filter(user=user)
+        return render(request, 'user_page/user_page.html', {'note_list': note_list})
+
+
+class AddNoteView(View):
+    """Add Note"""
+
+    def post(self, request, username):
+        form = AddNoteForm(request.POST)
+        print('\n', form.errors, '\n')
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = User.objects.get_by_natural_key(username=username)
+            form.save()
+        return redirect('profile')
+
+
+class EditNoteView(View):
+    """Add List"""
+
+    def post(self, request):
+        form = EditNoteForm(request.POST)
+        id = request.POST['id']
+        print('\n', form.errors, '\n')
+        note = Note.objects.get(id=id)
+        note.title = request.POST['title']
+        note.text = request.POST['text']
+        note.save()
+
+        return redirect('profile')
 
 
 class LoginView(djLoginView):
@@ -50,34 +84,6 @@ class SignInView(CreateView):
 
 class LogoutView(djLogoutView):
     next_page = reverse_lazy('login')
-
-
-class AddNoteView(View):
-    """Add Note"""
-
-    def post(self, request, username):
-        form = AddNoteForm(request.POST)
-        print('\n', form.errors, '\n')
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.user = User.objects.get_by_natural_key(username=username)
-            form.save()
-        return redirect('profile')
-
-
-class EditNoteView(View):
-    """Add List"""
-
-    def post(self, request):
-        form = EditNoteForm(request.POST)
-        id = request.POST['id']
-        print('\n', form.errors, '\n')
-        note = Note.objects.get(id=id)
-        note.title = request.POST['title']
-        note.text = request.POST['text']
-        note.save()
-
-        return redirect('profile')
 
 
 class AddListView(View):

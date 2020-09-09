@@ -9,8 +9,8 @@
     <div class="search">
         <div class="search_icon"><i class="fa fa-search" style="font-family:'Roboto', sans-serif, FontAwesome"></i>
         </div>
-        <form>
-            <input class="search_input" type="search" placeholder="Search">
+        <form action="{% url 'search_note' %}" method="get">
+            <input name="q" class="search_input" type="search" placeholder="Search">
         </form>
     </div>
     <div class="user_buttons">
