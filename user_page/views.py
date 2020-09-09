@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
 from .models import Note, List, User, Project
-from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm
+from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm, EditNoteForm
 
 
 class ProfileView(View):
@@ -62,6 +62,21 @@ class AddNoteView(View):
             form = form.save(commit=False)
             form.user = User.objects.get_by_natural_key(username=username)
             form.save()
+        return redirect('profile')
+
+
+class EditNoteView(View):
+    """Add List"""
+
+    def post(self, request):
+        form = EditNoteForm(request.POST)
+        id = request.POST['id']
+        print('\n', form.errors, '\n')
+        note = Note.objects.get(id=id)
+        note.title = request.POST['title']
+        note.text = request.POST['text']
+        note.save()
+
         return redirect('profile')
 
 

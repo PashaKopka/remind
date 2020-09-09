@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User as djUser
+from django.utils import timezone
 
 
 class User(djUser):
@@ -24,11 +25,11 @@ class Note(models.Model):
     text = models.TextField('Text')
     files = models.FileField('File', upload_to='user_files/', blank=True)
     style = models.CharField('Style', max_length=300, default=0, null=True)
-    remind = models.DateTimeField('Remind', default=0, null=True, blank=False)
-    deadline = models.DateTimeField('Deadline', default=0, null=True, blank=False)
+    remind = models.DateTimeField('Remind', default=timezone.now, null=True, blank=False)
+    deadline = models.DateTimeField('Deadline', default=timezone.now, null=True, blank=False)
     done = models.BooleanField('Done', default=False)
     draft = models.BooleanField('Draft', default=False)
-    date_of_adding = models.DateTimeField('DateOfAdding', default=datetime.now)
+    date_of_adding = models.DateTimeField('DateOfAdding', default=timezone.now)
 
     def __str__(self):
         return f"{self.user} - {self.title}"
