@@ -382,3 +382,36 @@ header{
 	margin-top: 20px;
 	width: 340px;
 }
+
+.add_note_button{
+	display: block;
+	position: fixed;
+	right: 30px;
+	bottom: 30px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #50c1e9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 5;
+	cursor: pointer;
+}
+.add_note_button span{
+	display: block;
+	width: 27px;
+	height: 5px;
+	background-color: #fff;
+	border-radius: 5px;
+}
+.add_note_button span::before{
+	position: relative;
+	content: '';
+	display: block;
+	width: 27px;
+	height: 5px;
+	background-color: #fff;
+	border-radius: 5px;
+	transform: rotate(90deg);
+}

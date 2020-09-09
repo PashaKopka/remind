@@ -36,9 +36,16 @@
 <div class="main_container">
 
     <div class="popup">
-        <form action="{% url 'edit_note' %}" method='post'>
+        <form id="edit_form" action="{% url 'edit_note' %}" method='post'>
             {% csrf_token %}
         </form>
+        <form id="add_form" action="{% url 'add_note' request.user.get_username %}" method='post'>
+            {% csrf_token %}
+        </form>
+    </div>
+
+    <div class="add_note_button">
+    	<span></span>
     </div>
 
     <div class="sitebar">
@@ -76,8 +83,8 @@
             <div class="note" value="{{ note.id }}">
                 <input type="hidden" value="{{ note.text }}">
                 <h4 class="note_title">{{ note.title }}</h4>
-                {% if note.text|length >= 200 %}
-                    <p class="text">{{ note.text|slice:":200" }}...</p>
+                {% if note.text|length >= 150 %}
+                    <p class="text">{{ note.text|slice:":150" }}...</p>
                 {% else %}
                     <p class="text">{{ note.text }}</p>
                 {% endif %}
