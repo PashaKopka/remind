@@ -1,0 +1,28 @@
+{% load filter_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_page.css' %}">
+    <script src="https://kit.fontawesome.com/0c09785e9d.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    {% include 'include/header.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+    {% include 'include/footer.html' %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'js/user_page/user_page.js' %}"></script>
+
+</body>
+</html>

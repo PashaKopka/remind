@@ -1,37 +1,8 @@
+{% extends 'user_page/base.html' %}
 {% load filter_tags %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'css/user_page.css' %}">
-    <script src="https://kit.fontawesome.com/0c09785e9d.js" crossorigin="anonymous"></script>
-    <title>Document</title>
-</head>
-<body>
+{% block notes %}
 
-
-<header>
-    <div class="burger_button">
-        <span></span>
-    </div>
-    <div class="logo">
-        <a href="{% url 'profile' %}" style="background-image: url('{% static 'img/user_page/logo.png' %}')" class="logo_url"></a>
-    </div>
-    <div class="search">
-        <div class="search_icon"><i class="fa fa-search" style="font-family:'Roboto', sans-serif, FontAwesome"></i>
-        </div>
-        <form>
-            <input class="search_input" type="search" placeholder="Search">
-        </form>
-    </div>
-    <div class="user_buttons">
-        <a href="" class="button">Settings</a>
-        <a href="{% url 'logout' %}" class="button logout_button">Logout</a>
-    </div>
-</header>
 
 <div class="main_container">
 
@@ -45,37 +16,10 @@
     </div>
 
     <div class="add_note_button">
-    	<span></span>
+        <span></span>
     </div>
 
-    <div class="sitebar">
-        <ul class="sitebar_list">
-            <li class="sitebar_element">
-                <div class="icon">
-                    <i id="note_icon" class="far fa-sticky-note"></i>
-                </div>
-                <a href="{% url 'profile' %}">Notes</a>
-            </li>
-            <li class="sitebar_element">
-                <div class="icon">
-                    <i class="fas fa-list-ul"></i>
-                </div>
-                <a href="">Lists</a>
-            </li>
-            <li class="sitebar_element">
-                <div class="icon">
-                    <i id="project_icon" class="fas fa-project-diagram"></i>
-                </div>
-                <a href="{% url 'projects' %}">Projects</a>
-            </li>
-            <li class="sitebar_element">
-                <div class="icon">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <a href="">Bin</a>
-            </li>
-        </ul>
-    </div>
+    {% include 'include/sitebar.html' %}
 
     <section class="note_section">
         <div class="note_grid">
@@ -84,9 +28,9 @@
                 <input type="hidden" value="{{ note.text }}">
                 <h4 class="note_title">{{ note.title }}</h4>
                 {% if note.text|length >= 150 %}
-                    <p class="text">{{ note.text|slice:":150" }}...</p>
+                <p class="text">{{ note.text|slice:":150" }}...</p>
                 {% else %}
-                    <p class="text">{{ note.text }}</p>
+                <p class="text">{{ note.text }}</p>
                 {% endif %}
             </div>
             {% endfor %}
@@ -94,79 +38,9 @@
     </section>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="{% static 'js/user_page/user_page.js' %}"></script>
 
-<!--<style>-->
-<!--    div{-->
-<!--        background: #B8B7B7;-->
-<!--        padding: 5px;-->
-<!--    }-->
-<!--    #add_list{-->
-<!--        width: 100px;-->
-<!--        height: 30px;-->
-<!--        background: #F3BB33;-->
-<!--        cursor: pointer;-->
-<!--        margin: 5px;-->
-<!--    }-->
-<!--    #done_list{-->
-<!--        width: 100px;-->
-<!--        height: 30px;-->
-<!--        background: #F3BB33;-->
-<!--        cursor: pointer;-->
-<!--        margin: 5px;-->
-<!--    }-->
+{% endblock notes %}
 
-
-<!--</style>-->
-
-<!--<p>{{ request.user }}</p>-->
-
-<!--<a href="{% url 'logout' %}">Logout</a>-->
-<!--<a href="{% url 'projects' %}">Projects</a>-->
-
-<!--<div>-->
-
-<!--    <ul>-->
-<!--        {% for note in note_list %}-->
-<!--        <li>-->
-<!--            <h4>{{ note.title }}</h4>-->
-<!--            <p>{{ note.text }}</p>-->
-<!--        </li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-
-<!--</div>-->
-<!--<br>-->
-
-<!--<div>-->
-
-<!--    <h1>Note</h1>-->
-
-<!--    <form action="{% url 'add_note' request.user.get_username %}" method="post">-->
-<!--        {% csrf_token %}-->
-
-<!--        <label>Title</label><br>-->
-<!--        <input type="text" name="title"><br>-->
-
-<!--        <label class="editContent">Ваш комментарий</label><br>-->
-<!--        <textarea rows="5" name="text" required=""></textarea><br>-->
-
-<!--        <label>Files</label><br>-->
-<!--        <input type="file" name="files"><br>-->
-
-<!--        <label>Date of remind</label><br>-->
-<!--        <input type="datetime-local" name="remind"><br>-->
-
-<!--        <label>Deadline</label><br>-->
-<!--        <input type="date" name="deadline"><br>-->
-
-
-<!--        <input type="submit">-->
-<!--    </form>-->
-
-<!--</div>-->
-<!--<br>-->
 <!--<div>-->
 <!--    <ul>-->
 <!--        {% for list in lists_list %}-->
@@ -219,6 +93,3 @@
 <!--    </form>-->
 
 <!--</div>-->
-
-</body>
-</html>
