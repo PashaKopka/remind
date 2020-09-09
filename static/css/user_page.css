@@ -341,7 +341,7 @@ header{
 }
 .note{
 	width: 235px;
-	min-height: 150px;
+	min-height: 170px;
 	justify-self: center;
 
 	background-color: #F5F7FA;
@@ -375,7 +375,6 @@ header{
 }
 .note_title{
 	width: 100%;
-	height: 20px;
 	margin-bottom: 10px;
 }
 .active_note .text{

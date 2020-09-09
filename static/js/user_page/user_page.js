@@ -67,7 +67,7 @@ $(document).ready(function(){
 	$('.popup #edit_form').append(
     	"<div class='popup_block'>"+
 				    "<input type='hidden' name='id' value=" + id + ">"+
-					"<input class='title_input' value=" + title + " type='text' name='title'>"+
+					"<input class='title_input' value='" + title + "' type='text' name='title'>"+
 					"<textarea name='text' id='' cols='30' rows='10'>" + text + "</textarea>"+
 					"<div class='buttons_block'>"+
 						"<input class='submit_button' type='submit'>"+
