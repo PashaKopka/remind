@@ -253,12 +253,13 @@ $(document).ready(function(){
 				"<div class='popup_exit_button popup_exit_button_active'>"+
 					"<span></span>"+
 				"</div>").fadeIn(500);
-			$('.popup form').append(
+			$('.popup #edit_form').append(
 		    	"<div class='popup_block'>"+
                     "<input type='hidden' name='id' value=" + id + ">"+
                     "<input class='title_input' value='" + title + "' type='text' name='title'>"+
                         "<div class='check_list list_items_block'>"+
     					"</div>"+
+							"<input name='list' value='' id='list_input' type='hidden'>"+
 							"<div class='buttons_block'>"+
 								"<input value='Save' class='submit_button' type='submit'>"+
 							"</div>"+
@@ -340,5 +341,18 @@ $(document).ready(function(){
 			$(this).parent().find('input').prop('checked', true);
 		}
   })
+
+
+  $(document).on("click","#edit_form .submit_button[type='submit']", function(){
+    var value = ''
+    $('._list_item').each(function(){
+        if ($(this).find('.checkbox').is(':checked')){
+            value += 'done=1' + $(this).find('.list_item_text').val() + '%%_next_%%'
+        }else{
+            value += 'done=0' + $(this).find('.list_item_text').val() + '%%_next_%%'
+        }
+    })
+    $('#list_input').val(value)
+  });
 
 });

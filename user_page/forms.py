@@ -47,6 +47,14 @@ class EditNoteForm(forms.ModelForm):
         fields = ('title', 'text')
 
 
+class EditListForm(forms.ModelForm):
+    """Edit Note Form"""
+
+    class Meta:
+        model = List
+        fields = ('title', )
+
+
 class AddListForm(forms.ModelForm):
     """Note Form"""
     remind = forms.DateTimeField(required=False)

@@ -7,7 +7,7 @@
 <div class="main_container">
 
     <div class="popup">
-        <form id="edit_form" action="{% url 'edit_note' %}" method='post'>
+        <form id="edit_form" action="{% url 'edit_list' %}" method='post'>
             {% csrf_token %}
         </form>
         <form id="add_form" action="{% url 'add_note' request.user.get_username %}" method='post'>
@@ -85,7 +85,6 @@
 
 	$('.list_item').click(function(e) {
 		e.preventDefault();
-<!--		alert($(this).closest('.list_item').find('label').html())-->
 
 		$.ajax({
 			type: 'POST',
