@@ -321,9 +321,12 @@ header{
 	margin-left: 3px;
 }
 
-.note_section{
-	display: flex;
+section{
+	display: grid;
+	grid-template-rows: 20px auto 20px auto 20px auto;
 	justify-content: center;
+	grid-gap: 10px;
+    padding: 30px;
 	width: calc( 100% - 50px );
 	height: calc( 100% - 56px );
 	position: absolute;
@@ -413,4 +416,12 @@ header{
 	background-color: #fff;
 	border-radius: 5px;
 	transform: rotate(90deg);
+}
+
+.caption{
+    margin: 10px 0;
+	font-size: 27px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	width: 100%;
 }

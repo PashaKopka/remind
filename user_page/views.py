@@ -16,15 +16,23 @@ class ProfileView(View):
     """List of films"""
 
     def get(self, request):
-        user = request.user.id
+        user = request.user
         query = request.GET.get('q')
         if query:
             note_list = Note.objects.filter(
-                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user)
+                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user.id)
             )
+            list_list = List.objects.filter(
+                Q(title__icontains=query) & Q(user_id=user.id)
+            )
+            project_list = Project.objects.filter(
+                Q(title__icontains=query) & Q(user_id=user.id)
+            )
+            return render(request, 'user_page/search.html',
+                          {'note_list': note_list, 'list_list': list_list, 'project_list': project_list})
         else:
             note_list = Note.objects.filter(user=user)
-        return render(request, 'user_page/user_page.html', {'note_list': note_list})
+            return render(request, 'user_page/user_page.html', {'note_list': note_list})
 
 
 class AddNoteView(View):
