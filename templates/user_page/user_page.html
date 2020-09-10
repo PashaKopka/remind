@@ -22,6 +22,7 @@
     {% include 'include/sitebar.html' %}
 
     <section class="note_section">
+        {% if note_list %}
         <div class="note_grid">
             {% for note in note_list %}
             <div class="note" value="{{ note.id }}">
@@ -35,6 +36,9 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <h1 class="trouble_messege">it's too empty here. <span class="add_note_a">let's fix it</span></h1>
+        {% endif %}
     </section>
 </div>
 

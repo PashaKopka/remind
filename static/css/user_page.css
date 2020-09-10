@@ -425,3 +425,21 @@ section{
 	font-weight: 500;
 	width: 100%;
 }
+.trouble_messege{
+	grid-row: 1 / 7;
+	align-content: center;
+	margin: auto;
+	font-size: 27px;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 500;
+	color: #babbab;
+	letter-spacing: 2px;
+}
+.add_note_a{
+    cursor: pointer;
+    color: #40ACD5;
+    transition: .1s;
+}
+.add_note_a:hover{
+    border-bottom: 2px #40ACD5 solid;
+}
