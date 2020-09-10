@@ -22,23 +22,21 @@
     {% include 'include/sitebar.html' %}
 
     <section class="note_section">
-        {% if note_list %}
         <div class="note_grid">
             {% for note in note_list %}
-            <div class="note" value="{{ note.id }}">
-                <input type="hidden" value="{{ note.text }}">
-                <h4 class="note_title">{{ note.title }}</h4>
-                {% if note.text|length >= 150 %}
-                <p class="text">{{ note.text|slice:":150" }}...</p>
-                {% else %}
-                <p class="text">{{ note.text }}</p>
-                {% endif %}
-            </div>
+                <div class="note" value="{{ note.id }}">
+                    <input type="hidden" value="{{ note.text }}">
+                    <h4 class="note_title">{{ note.title }}</h4>
+                    {% if note.text|length >= 150 %}
+                    <p class="text">{{ note.text|slice:":150" }}...</p>
+                    {% else %}
+                    <p class="text">{{ note.text }}</p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <h1 class="trouble_messege">it's too empty here. <span class="add_note_a">let's fix it</span></h1>
             {% endfor %}
         </div>
-        {% else %}
-        <h1 class="trouble_messege">it's too empty here. <span class="add_note_a">let's fix it</span></h1>
-        {% endif %}
     </section>
 </div>
 

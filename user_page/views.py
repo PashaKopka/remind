@@ -103,6 +103,32 @@ class ListView(View):
         return render(request, 'user_page/lists.html', {'list_list': list_list})
 
 
+class CheckListView(View):
+
+    def post(self, request):
+        id = request.POST['id']
+        check = request.POST['check']
+        num = int(request.POST['num'])
+
+        list_text = List.objects.get(id=id)
+        list_arr = list_text.list.split('%%_next_%%')
+        list_arr = list(filter(lambda x: x != '', list_arr))
+
+        if check == 'true':
+            new_value = 'done=1' + list_arr[num][6:]
+        else:
+            new_value = 'done=0' + list_arr[num][6:]
+        list_arr[num] = new_value
+
+        new_list = ''
+        for text in list_arr:
+            new_list += '%%_next_%%' + text
+        list_text.list = new_list
+
+        list_text.save()
+        return redirect('lists')
+
+
 class AddListView(View):
     """Add List"""
 
