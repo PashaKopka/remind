@@ -70,7 +70,7 @@ $(document).ready(function(){
 					"<input class='title_input' value='" + title + "' type='text' name='title'>"+
 					"<textarea name='text' id='' cols='30' rows='10'>" + text + "</textarea>"+
 					"<div class='buttons_block'>"+
-						"<input class='submit_button' type='submit'>"+
+						"<input value='Save' class='submit_button' type='submit'>"+
 					"</div>"+
 				"</form>"+
 			"</div>"
@@ -130,7 +130,7 @@ $(document).ready(function(){
 				    "<input class='title_input' placeholder='Title' type='text' name='title'>"+
 					"<textarea placeholder='Text' name='text' id='' cols='30' rows='10'></textarea>"+
 					"<div class='buttons_block'>"+
-						"<input class='submit_button' type='submit'>"+
+						"<input value='Save' class='submit_button' type='submit'>"+
 					"</div>"+
 				"</form>"+
 			"</div>"
@@ -190,7 +190,7 @@ $(document).ready(function(){
 				    "<input class='title_input' placeholder='Title' type='text' name='title'>"+
 					"<textarea placeholder='Text' name='text' id='' cols='30' rows='10'></textarea>"+
 					"<div class='buttons_block'>"+
-						"<input class='submit_button' type='submit'>"+
+						"<input value='Save' class='submit_button' type='submit'>"+
 					"</div>"+
 				"</form>"+
 			"</div>"
@@ -235,6 +235,81 @@ $(document).ready(function(){
 					}, 500);
    			}
 		});
+  })
+
+
+  $('.list').click(function(){
+  	if(event.target === this || $(event.target).attr('class') == 'list_item') {
+  		var list_item_text_arr = []
+  		id = $(this).attr('value')
+	    title = $(this).find('h4').html()
+	    text = $(this).find('label').each(function(){
+	    	list_item_text_arr.push($(this).html())
+	    })
+	    $('.popup').append(
+	    	"<div class='popup_background popup_background_active'></div>"+
+				"<div class='popup_exit_button popup_exit_button_active'>"+
+					"<span></span>"+
+				"</div>").fadeIn(500);
+			$('.popup form').append(
+		    	"<div class='popup_block'>"+
+						  "<input type='hidden' name='id' value=" + id + ">"+
+							"<input class='title_input' value='" + title + "' type='text' name='title'>"+
+							"<div class='check_list list_items_block'>"+
+	    					"<div class='_list_item'>"+
+	    						"<input class='checkbox' type='checkbox' checked>"+
+	    						"<input class='list_item_text' type='text' value='text'>"+
+    						"</div>"+
+    					"</div>"+
+							"<div class='buttons_block'>"+
+								"<input value='Save' class='submit_button' type='submit'>"+
+							"</div>"+
+						"</form>"+
+					"</div>"
+			).fadeIn(500);
+	    $(".popup_background").addClass('popup_background_active');
+	  	$(".popup_exit_button").addClass('popup_exit_button_active');
+
+
+	    $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(".popup_background").click(function(){	// Событие клика на затемненный фон
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(document).keyup(function(e) {
+	   		  if (e.key === "Escape") {
+						$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_exit_button").fadeOut(500);
+						setTimeout(function() {
+						  $(".popup_block").remove();
+						  $(".popup_background").remove()
+			  			$(".popup_exit_button").remove();
+						}, 500);
+	   			}
+
+		});
+
+  	}
   })
 
 });

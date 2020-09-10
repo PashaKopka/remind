@@ -22,7 +22,8 @@ a:hover{cursor: pointer;}
 *{margin: 0; padding: 0;}
 *{-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
 button,input,a{outline: none;}
-button, input, select{-webkit-appearance: none; -moz-appearance: none; appearance: none;}
+button, select{-webkit-appearance: none; -moz-appearance: none; appearance: none;}
+/*input{-webkit-appearance: none; -moz-appearance: none; appearance: none;}*/
 html{
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;

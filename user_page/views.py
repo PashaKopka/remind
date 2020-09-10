@@ -94,6 +94,15 @@ class LogoutView(djLogoutView):
     next_page = reverse_lazy('login')
 
 
+class ListView(View):
+    """List of films"""
+
+    def get(self, request):
+        user = request.user
+        list_list = List.objects.filter(user=user)
+        return render(request, 'user_page/lists.html', {'list_list': list_list})
+
+
 class AddListView(View):
     """Add List"""
 

@@ -443,3 +443,49 @@ section{
 .add_note_a:hover{
     border-bottom: 2px #40ACD5 solid;
 }
+
+
+.check_list{
+	display: grid;
+}
+.list_item{
+	margin: 1px 0;
+	width: auto;
+}
+.check_list label{
+	width: 100%;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 500;
+}
+.checkbox{
+	width: 13px;
+	height: 13px;
+}
+.list_items_block{
+}
+
+.popup_block{
+	align-items: flex-start;
+	grid-template-columns: 90%;
+	padding: 20px 10px;
+}
+._list_item{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.list_items_block .list_item_text{
+	width: 93%;
+	height: 25px;
+	font-size: 20px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	color: #babbab;
+	border: 0px #000 solid;
+	background-color: #F5F7FA;
+}
+.list_items_block .list_item_text:focus{
+	outline: none;
+	color: #000;
+	background-color: #fff;
+}

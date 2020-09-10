@@ -15,6 +15,7 @@ urlpatterns = [
 
     # Lists
     path('add_list/<slug:username>/', views.AddListView.as_view(), name='add_list'),
+    path('lists/', views.ListView.as_view(), name='lists'),
 
     # Projects
     path('projects/', views.ProjectsView.as_view(), name='projects'),

@@ -15,30 +15,47 @@
         </form>
     </div>
 
-    <div class="add_note_button">
+    <div class="add_list_button">
         <span></span>
     </div>
 
     {% include 'include/sitebar.html' %}
 
-    <section class="note_section">
-        {% if note_list %}
-        <div class="note_grid">
-            {% for note in note_list %}
-            <div class="note" value="{{ note.id }}">
-                <input type="hidden" value="{{ note.text }}">
-                <h4 class="note_title">{{ note.title }}</h4>
-                {% if note.text|length >= 150 %}
-                <p class="text">{{ note.text|slice:":150" }}...</p>
-                {% else %}
-                <p class="text">{{ note.text }}</p>
-                {% endif %}
+    <section>
+    	<div class="list_grid note_grid">
+        <div class="note list" value="">
+            <input type="hidden" value="">
+            <h4 class="note_title">Title</h4>
+            <div class="check_list">
+            	<div class="list_item">
+            		<input class="checkbox" type="checkbox">
+	            	<label>text</label>
+            	</div>
+            	<div class="list_item">
+            		<input class="checkbox" type="checkbox">
+	            	<label>text</label>
+            	</div>
+            	<div class="list_item">
+            		<input class="checkbox" type="checkbox">
+	            	<label>text</label>
+            	</div>
+            	<div class="list_item">
+            		<input class="checkbox" type="checkbox">
+	            	<label>text</label>
+            	</div>
+            	<div class="list_item">
+            		<input class="checkbox" type="checkbox">
+	            	<label>text</label>
+            	</div>
             </div>
-            {% endfor %}
         </div>
-        {% else %}
-        <h1 class="trouble_messege">it's too empty here. <span class="add_note_a">let's fix it</span></h1>
-        {% endif %}
+        <div class="note" value="">
+            <input type="hidden" value="">
+            <h4 class="note_title"></h4>
+            <p class="text"></p>
+            <p class="text"></p>
+        </div>
+      </div>
     </section>
 </div>
 
