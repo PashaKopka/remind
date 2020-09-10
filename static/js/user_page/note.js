@@ -39,15 +39,17 @@ $(document).ready(function(){
 				}
 
 		}else{
-	  	if (note_arr[i].find('p').html().length <= 150) {
-				$(note_arr[i]).css('grid-row', (start + ' / ' + (start + 1)));
-			}else if(note_arr[i].html().length > 150 && (note_arr[i].html()).length <= 250){
-				$(note_arr[i]).css('grid-row', (start + ' / ' + (start + 2)));
-				$(note_arr[i]).css('min-height', '300px')
-			}else{
-				$(note_arr[i]).css('grid-row', (start + ' / ' + (start + 2)));
-				$(note_arr[i]).css('min-height', '300px')
-			}
+		if (note_arr[i].attr('class') != 'note list'){
+            if (note_arr[i].find('p').html().length <= 150) {
+                    $(note_arr[i]).css('grid-row', (start + ' / ' + (start + 1)));
+                }else if(note_arr[i].html().length > 150 && (note_arr[i].html()).length <= 250){
+                    $(note_arr[i]).css('grid-row', (start + ' / ' + (start + 2)));
+                    $(note_arr[i]).css('min-height', '300px')
+                }else{
+                    $(note_arr[i]).css('grid-row', (start + ' / ' + (start + 2)));
+                    $(note_arr[i]).css('min-height', '300px')
+                }
+            }
 		}
   }
 
@@ -56,6 +58,7 @@ $(document).ready(function(){
   })
 
   $('.note').click(function(){
+  if($(event.target).attr('class') == 'note') {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('input').val()
@@ -115,6 +118,7 @@ $(document).ready(function(){
             }, 500);
    			}
 		});
+	}
   })
 
 
@@ -243,9 +247,7 @@ $(document).ready(function(){
   		var list_item_text_arr = []
   		id = $(this).attr('value')
 	    title = $(this).find('h4').html()
-	    text = $(this).find('label').each(function(){
-	    	list_item_text_arr.push($(this).html())
-	    })
+	    text = $(this).find('input[type="hidden"]').val().split('%%_next_%%')
 	    $('.popup').append(
 	    	"<div class='popup_background popup_background_active'></div>"+
 				"<div class='popup_exit_button popup_exit_button_active'>"+
@@ -253,13 +255,9 @@ $(document).ready(function(){
 				"</div>").fadeIn(500);
 			$('.popup form').append(
 		    	"<div class='popup_block'>"+
-						  "<input type='hidden' name='id' value=" + id + ">"+
-							"<input class='title_input' value='" + title + "' type='text' name='title'>"+
-							"<div class='check_list list_items_block'>"+
-	    					"<div class='_list_item'>"+
-	    						"<input class='checkbox' type='checkbox' checked>"+
-	    						"<input class='list_item_text' type='text' value='text'>"+
-    						"</div>"+
+                    "<input type='hidden' name='id' value=" + id + ">"+
+                    "<input class='title_input' value='" + title + "' type='text' name='title'>"+
+                        "<div class='check_list list_items_block'>"+
     					"</div>"+
 							"<div class='buttons_block'>"+
 								"<input value='Save' class='submit_button' type='submit'>"+
@@ -267,6 +265,26 @@ $(document).ready(function(){
 						"</form>"+
 					"</div>"
 			).fadeIn(500);
+
+		for (var i = 0; i < text.length; i++) {
+		    if (text[i] != ''){
+		        if (text[i].substr(0, 6) == 'done=0')
+                    $('.list_items_block').append(
+                        "<div class='_list_item'>"+
+                            "<input class='checkbox' type='checkbox'>"+
+                            "<input class='list_item_text' type='text' value='" + text[i].substr(6) +"'>"+
+                        "</div>"
+                    )
+                else{
+                    $('.list_items_block').append(
+                        "<div class='_list_item'>"+
+                            "<input class='checkbox' type='checkbox' checked>"+
+                            "<input class='list_item_text' type='text' value='" + text[i].substr(6) +"'>"+
+                        "</div>"
+                    )
+                }
+            }
+        };
 	    $(".popup_background").addClass('popup_background_active');
 	  	$(".popup_exit_button").addClass('popup_exit_button_active');
 
@@ -310,6 +328,17 @@ $(document).ready(function(){
 		});
 
   	}
+  })
+
+  $('.list_item label').click(function(){
+  	if ($(this).parent().find('input').is(':checked'))
+		{
+			$(this).parent().find('input').prop('checked', false);
+		}
+		else
+		{
+			$(this).parent().find('input').prop('checked', true);
+		}
   })
 
 });

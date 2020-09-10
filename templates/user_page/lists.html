@@ -22,40 +22,34 @@
     {% include 'include/sitebar.html' %}
 
     <section>
-    	<div class="list_grid note_grid">
-        <div class="note list" value="">
-            <input type="hidden" value="">
-            <h4 class="note_title">Title</h4>
-            <div class="check_list">
-            	<div class="list_item">
-            		<input class="checkbox" type="checkbox">
-	            	<label>text</label>
-            	</div>
-            	<div class="list_item">
-            		<input class="checkbox" type="checkbox">
-	            	<label>text</label>
-            	</div>
-            	<div class="list_item">
-            		<input class="checkbox" type="checkbox">
-	            	<label>text</label>
-            	</div>
-            	<div class="list_item">
-            		<input class="checkbox" type="checkbox">
-	            	<label>text</label>
-            	</div>
-            	<div class="list_item">
-            		<input class="checkbox" type="checkbox">
-	            	<label>text</label>
-            	</div>
+        <div class="list_grid note_grid">
+            {% for list in list_list %}
+            <div class="note list" value="{{ list.id }}">
+                <input type="hidden" value="{{ list.list }}">
+                <h4 class="note_title">{{ list.title }}</h4>
+                <div class="check_list">
+
+                    {% with list.list|split:"%%_next_%%" as array %}
+                        {% for string in array %}
+                            {% if string == '' %}
+                            {% elif string|slice:":6" == 'done=1' %}
+                                <div class="list_item">
+                                    <input class="checkbox" type="checkbox" checked>
+                                    <label>{{ string|slice:"6:" }}</label>
+                                </div>
+                            {% else %}
+                                <div class="list_item">
+                                    <input class="checkbox" type="checkbox">
+                                    <label>{{ string|slice:"6:" }}</label>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+
+                </div>
             </div>
+            {% endfor %}
         </div>
-        <div class="note" value="">
-            <input type="hidden" value="">
-            <h4 class="note_title"></h4>
-            <p class="text"></p>
-            <p class="text"></p>
-        </div>
-      </div>
     </section>
 </div>
 

@@ -466,8 +466,7 @@ section{
 
 .popup_block{
 	align-items: flex-start;
-	grid-template-columns: 90%;
-	padding: 20px 10px;
+	padding: 20px;
 }
 ._list_item{
 	display: flex;
