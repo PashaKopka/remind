@@ -62,7 +62,7 @@ class AddListForm(forms.ModelForm):
 
     class Meta:
         model = List
-        fields = ('title', 'list', 'remind', 'deadline')
+        fields = ('title', 'remind', 'deadline')
 
 
 class AddProjectForm(forms.ModelForm):

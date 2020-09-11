@@ -10,7 +10,7 @@
         <form id="edit_form" action="{% url 'edit_list' %}" method='post'>
             {% csrf_token %}
         </form>
-        <form id="add_form" action="{% url 'add_note' request.user.get_username %}" method='post'>
+        <form id="add_form" action="{% url 'add_list' request.user.get_username %}" method='post'>
             {% csrf_token %}
         </form>
     </div>

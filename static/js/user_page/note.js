@@ -344,7 +344,7 @@ $(document).ready(function(){
   })
 
 
-  $(document).on("click","#edit_form .submit_button[type='submit']", function(){
+  $(document).on("click",".submit_button[type='submit']", function(){
     var value = ''
     $('._list_item').each(function(){
         if ($(this).find('.checkbox').is(':checked')){
@@ -356,13 +356,84 @@ $(document).ready(function(){
     $('#list_input').val(value)
   });
 
-  $(document).on("click","#edit_form .add_list_item", function(){
+  $(document).on("click",".add_list_item", function(){
     $('.list_items_block').append(
         "<div class='_list_item'>"+
             "<input class='checkbox' type='checkbox'>"+
-            "<input class='list_item_text' type='text' value=''>"+
+            "<input placeholder='your note' class='list_item_text' type='text' value=''>"+
         "</div>"
     )
+  })
+
+
+  $('.add_list_button').click(function(){
+	    $('.popup').append(
+	    	"<div class='popup_background popup_background_active'></div>"+
+				"<div class='popup_exit_button popup_exit_button_active'>"+
+					"<span></span>"+
+				"</div>").fadeIn(500);
+			$('.popup #add_form').append(
+		    	"<div class='popup_block'>"+
+                    "<input type='hidden' name='id'>"+
+                    "<input placeholder='Title' class='title_input' value='' type='text' name='title'>"+
+                        "<div class='check_list list_items_block'>"+
+                            "<div class='_list_item'>"+
+                                "<input class='checkbox' type='checkbox'>"+
+                                "<input placeholder='your note' class='list_item_text' type='text' value=''>"+
+                            "</div>"+
+    					"</div>"+
+							"<input name='list' value='' id='list_input' type='hidden'>"+
+							"<div class='buttons_block'>"+
+								"<span class='add_list_item'>Add</span>"+
+								"<input value='Save' class='submit_button' type='submit'>"+
+							"</div>"+
+						"</form>"+
+					"</div>"
+			).fadeIn(500);
+
+	    $(".popup_background").addClass('popup_background_active');
+	  	$(".popup_exit_button").addClass('popup_exit_button_active');
+
+
+	    $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(".popup_background").click(function(){	// Событие клика на затемненный фон
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(document).keyup(function(e) {
+	   		  if (e.key === "Escape") {
+						$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_exit_button").fadeOut(500);
+						setTimeout(function() {
+						  $(".popup_block").remove();
+						  $(".popup_background").remove()
+			  			$(".popup_exit_button").remove();
+						}, 500);
+	   			}
+
+		});
+
+
   })
 
 });

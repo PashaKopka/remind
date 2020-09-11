@@ -138,8 +138,9 @@ class AddListView(View):
         if form.is_valid():
             form = form.save(commit=False)
             form.user = User.objects.get_by_natural_key(username=username)
+            form.list = request.POST['list']
             form.save()
-        return redirect('profile')
+        return redirect('lists')
 
 
 class EditListView(View):

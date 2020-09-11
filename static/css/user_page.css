@@ -399,6 +399,7 @@ section{
 	width: 340px;
 }
 
+.add_list_button,
 .add_note_button{
 	display: block;
 	position: fixed;
@@ -414,6 +415,7 @@ section{
 	z-index: 5;
 	cursor: pointer;
 }
+.add_list_button span,
 .add_note_button span{
 	display: block;
 	width: 27px;
@@ -421,6 +423,7 @@ section{
 	background-color: #fff;
 	border-radius: 5px;
 }
+.add_list_button span::before,
 .add_note_button span::before{
 	position: relative;
 	content: '';
