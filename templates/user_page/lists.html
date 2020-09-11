@@ -22,12 +22,16 @@
     {% include 'include/sitebar.html' %}
 
     <section>
-        <div class="list_grid note_grid">
+        <div class="list_grid note_grid" style="grid-row: 1 / 7;">
             {% for list in list_list %}
             <div class="note list" value="{{ list.id }}">
                 <form>{% csrf_token %}<span class="del_button"></span></form>
-                <input type="hidden" value="{{ list.list }}">
-                <h4 class="note_title">{{ list.title }}</h4>
+                <input class="hidden_value" type="hidden" value="{{ list.list }}">
+                {% if list.title|length > 20 %}
+                    <h4 class="note_title">{{ list.title|slice:":20" }}...</h4>
+                    {% else %}
+                    <h4 class="note_title">{{ list.title }}</h4>
+                    {% endif %}
                 <div class="check_list">
 
                     {% with list.list|split:"%%_next_%%" as array %}
@@ -59,6 +63,8 @@
 
                 </div>
             </div>
+            {% empty %}
+                <h1 class="trouble_messege">it's too empty here. <span class="add_list_a">let's fix it</span></h1>
             {% endfor %}
         </div>
     </section>

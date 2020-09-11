@@ -27,7 +27,11 @@
                 <div class="note" value="{{ note.id }}">
                     <form>{% csrf_token %}<span class="del_button"></span></form>
                     <input type="hidden" value="{{ note.text }}">
+                    {% if note.title|length > 20 %}
+                    <h4 class="note_title">{{ note.title|slice:":20" }}...</h4>
+                    {% else %}
                     <h4 class="note_title">{{ note.title }}</h4>
+                    {% endif %}
                     {% if note.text|length >= 150 %}
                     <p class="text">{{ note.text|slice:":150" }}...</p>
                     {% else %}
