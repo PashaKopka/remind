@@ -261,6 +261,7 @@ $(document).ready(function(){
     					"</div>"+
 							"<input name='list' value='' id='list_input' type='hidden'>"+
 							"<div class='buttons_block'>"+
+								"<span class='add_list_item'>Add</span>"+
 								"<input value='Save' class='submit_button' type='submit'>"+
 							"</div>"+
 						"</form>"+
@@ -354,5 +355,14 @@ $(document).ready(function(){
     })
     $('#list_input').val(value)
   });
+
+  $(document).on("click","#edit_form .add_list_item", function(){
+    $('.list_items_block').append(
+        "<div class='_list_item'>"+
+            "<input class='checkbox' type='checkbox'>"+
+            "<input class='list_item_text' type='text' value=''>"+
+        "</div>"
+    )
+  })
 
 });

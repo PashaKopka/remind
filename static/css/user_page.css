@@ -115,8 +115,22 @@
 	transition: .1s;
 	cursor: pointer;
 }
-.submit_button:hover{
+.submit_button:hover,
+.add_list_item:hover{
 	background-color: #50C1E9;
+}
+.add_list_item{
+    padding: 5px 10px;
+	border: 0px #000 solid;
+	border-radius: 5px;
+	background-color: #7A57D1;
+	color: #fff;
+	font-size: 17px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	transition: .1s;
+	cursor: pointer;
+	margin-right: 10px;
 }
 
 
@@ -487,4 +501,7 @@ section{
 	outline: none;
 	color: #000;
 	background-color: #fff;
+}
+.list{
+    min-height: 200px;
 }
