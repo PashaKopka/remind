@@ -19,6 +19,7 @@ urlpatterns = [
     path('lists/', views.ListView.as_view(), name='lists'),
     path('edit_list/', views.EditListView.as_view(), name='edit_list'),
     path('lists/check', views.CheckListView.as_view(), name='check_list'),
+    path('lists/del', views.DelListView.as_view(), name='list_del'),
 
     # Projects
     path('projects/', views.ProjectsView.as_view(), name='projects'),

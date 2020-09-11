@@ -99,7 +99,7 @@ class ListView(View):
 
     def get(self, request):
         user = request.user
-        list_list = List.objects.filter(user=user)
+        list_list = List.objects.filter(user=user, draft=False)
         return render(request, 'user_page/lists.html', {'list_list': list_list})
 
 
@@ -149,10 +149,21 @@ class EditListView(View):
         form = EditListForm(request.POST)
         id = request.POST['id']
         print('\n', form.errors, '\n')
-        note = List.objects.get(id=id)
-        note.title = request.POST['title']
-        note.list = request.POST['list']
-        note.save()
+        list_text = List.objects.get(id=id)
+        list_text.title = request.POST['title']
+        list_text.list = request.POST['list']
+        list_text.save()
+
+        return redirect('lists')
+
+
+class DelListView(View):
+
+    def post(self, request):
+        id = request.POST['id']
+        list_text = List.objects.get(id=id)
+        list_text.draft = True
+        list_text.save()
 
         return redirect('lists')
 

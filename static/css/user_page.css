@@ -370,7 +370,6 @@ section{
 	font-family: 'Roboto', sans-serif;
 	font-weight: 500;
 	top: auto;
-	overflow-x: hidden;
 	cursor: pointer;
 }
 .note .text{
@@ -507,4 +506,39 @@ section{
 }
 .list{
     min-height: 200px;
+}
+
+.note:hover .del_button{opacity: 1;}
+.del_button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, .7);
+	width: 20px;
+	height: 20px;
+	position: relative;
+	left: 213px;
+	bottom: 20px;
+	border-radius: 50%;
+	cursor: pointer;
+	opacity: 0;
+	transition: .3s;
+}
+.del_button::before,
+.del_button::after{
+	content: '';
+	display: block;
+	width: 13px;
+	height: 3px;
+	background-color: #fff;
+	position: relative;
+	border-radius: 3px;
+}
+.del_button::before{
+	left: 5px;
+	transform: rotate(45deg);
+}
+.del_button::after{
+	right: 5px;
+	transform: rotate(-45deg);
 }

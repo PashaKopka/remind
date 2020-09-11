@@ -25,6 +25,7 @@
         <div class="list_grid note_grid">
             {% for list in list_list %}
             <div class="note list" value="{{ list.id }}">
+                <form>{% csrf_token %}<span class="del_button"></span></form>
                 <input type="hidden" value="{{ list.list }}">
                 <h4 class="note_title">{{ list.title }}</h4>
                 <div class="check_list">
@@ -99,6 +100,23 @@
 
 			}
 		})
+	})
+
+	$('.del_button').click(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: 'POST',
+			url: 'del',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: $(this).closest('.list').attr('value')
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.list').remove()
 	})
 
 </script>
