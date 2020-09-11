@@ -13,6 +13,7 @@ urlpatterns = [
     path('add_note/<slug:username>/', views.AddNoteView.as_view(), name='add_note'),
     path('edit_note/', views.EditNoteView.as_view(), name='edit_note'),
     path('', views.ProfileView.as_view(), name='search_note'),
+    path('del', views.DelNoteView.as_view(), name='note_del'),
 
     # Lists
     path('add_list/<slug:username>/', views.AddListView.as_view(), name='add_list'),

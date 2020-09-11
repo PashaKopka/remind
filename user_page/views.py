@@ -31,7 +31,7 @@ class ProfileView(View):
             return render(request, 'user_page/search.html',
                           {'note_list': note_list, 'list_list': list_list, 'project_list': project_list})
         else:
-            note_list = Note.objects.filter(user=user)
+            note_list = Note.objects.filter(user=user, draft=False)
             return render(request, 'user_page/user_page.html', {'note_list': note_list})
 
 
@@ -58,6 +58,18 @@ class EditNoteView(View):
         note = Note.objects.get(id=id)
         note.title = request.POST['title']
         note.text = request.POST['text']
+        note.save()
+
+        return redirect('profile')
+
+
+class DelNoteView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = request.POST['id']
+        note = Note.objects.get(id=id)
+        note.draft = True
         note.save()
 
         return redirect('profile')

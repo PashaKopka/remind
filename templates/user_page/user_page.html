@@ -25,6 +25,7 @@
         <div class="note_grid">
             {% for note in note_list %}
                 <div class="note" value="{{ note.id }}">
+                    <form>{% csrf_token %}<span class="del_button"></span></form>
                     <input type="hidden" value="{{ note.text }}">
                     <h4 class="note_title">{{ note.title }}</h4>
                     {% if note.text|length >= 150 %}
@@ -40,59 +41,43 @@
     </section>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+	$('.del_button').click(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: 'POST',
+			url: 'del',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: $(this).closest('.note').attr('value')
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.note').remove()
+	})
+
+</script>
 
 {% endblock notes %}
-
-<!--<div>-->
-<!--    <ul>-->
-<!--        {% for list in lists_list %}-->
-<!--        <li>-->
-<!--            <h4>{{ list.title }}</h4>-->
-<!--                input[value = list.list]-->
-<!--            {% with list.list|split:"%%_next_%%" as array %}-->
-<!--                <div>-->
-<!--                    {% for string in array %}-->
-<!--                        {% if string == '' %}-->
-<!--                        {% elif string|slice:":6" == 'done=1' %}-->
-<!--                            <input type="checkbox" checked>-->
-<!--                            <label>{{ string|slice:"6:" }}</label><br>-->
-<!--                        {% else %}-->
-<!--                            <input type="checkbox">-->
-<!--                            <label>{{ string|slice:"6:" }}</label><br>-->
-<!--                        {% endif %}-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
-<!--            {% endwith %}-->
-<!--        </li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-<!--</div>-->
-<!--<br>-->
-<!--<div>-->
-
-<!--    <h1>List</h1>-->
-
-<!--    <form action="{% url 'add_list' request.user.get_username %}" method="post">-->
-<!--        {% csrf_token %}-->
-
-<!--        <label>Title</label><br>-->
-<!--        <input type="text" name="title"><br>-->
-
-<!--        <input id="list_input" type="hidden" name="list" value="">-->
-
-<!--        <div id="list">-->
-
-<!--        </div>-->
-<!--        <div id="add_list">Add list</div>-->
-
-<!--        <label>Date of remind</label><br>-->
-<!--        <input type="datetime-local" name="remind"><br>-->
-
-<!--        <label>Deadline</label><br>-->
-<!--        <input type="date" name="deadline"><br>-->
-
-
-<!--        <input id="done_list" type="submit">-->
-<!--    </form>-->
-
-<!--</div>-->
