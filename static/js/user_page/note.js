@@ -367,6 +367,7 @@ $(document).ready(function(){
             "<input placeholder='your note' class='list_item_text' type='text' value=''>"+
         "</div>"
     )
+    $('.list_items_block ._list_item:last-child .list_item_text').focus()
   })
 
 
