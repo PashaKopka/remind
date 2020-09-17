@@ -546,3 +546,6 @@ section{
 	right: 5px;
 	transform: rotate(-45deg);
 }
+.active_label{
+    text-decoration: line-through;
+}

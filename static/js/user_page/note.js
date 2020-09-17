@@ -58,7 +58,9 @@ $(document).ready(function(){
   })
 
   $('.note').click(function(){
-  if($(event.target).attr('class') == 'note') {
+  if(($(event.target).attr('class') != '_label') && ($(event.target).attr('class') != '_label active_label')
+     && ($(event.target).attr('class') != 'list_item') && ($(event.target).attr('class') != '_list_title note_title')
+     && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('input').val()
@@ -141,6 +143,7 @@ $(document).ready(function(){
 	).fadeIn(500);
     $(".popup_background").addClass('popup_background_active');
   	$(".popup_exit_button").addClass('popup_exit_button_active');
+  	$('.popup_block textarea').focus()
 
 
     $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
@@ -243,7 +246,7 @@ $(document).ready(function(){
 
 
   $('.list').click(function(){
-  	if(event.target === this || $(event.target).attr('class') == 'list_item') {
+  	if((event.target === this || ($(event.target).attr('class') == '_list_title note_title')) && $(event.target).attr('class') != 'list_item') {
   		var list_item_text_arr = []
   		id = $(this).attr('value')
 	    title = $(this).find('h4').html()
@@ -336,14 +339,16 @@ $(document).ready(function(){
   	}
   })
 
-  $('.list_item label').click(function(){
-  	if ($(this).parent().find('input').is(':checked'))
+  $('.list_item').click(function(){
+  	if ($(this).find('input').is(':checked'))
 		{
-			$(this).parent().find('input').prop('checked', false);
+			$(this).find('input').prop('checked', false);
+			$(this).find('label').removeClass('active_label')
 		}
 		else
 		{
-			$(this).parent().find('input').prop('checked', true);
+			$(this).find('input').prop('checked', true);
+			$(this).find('label').addClass('active_label')
 		}
   })
 
@@ -398,6 +403,7 @@ $(document).ready(function(){
 
 	    $(".popup_background").addClass('popup_background_active');
 	  	$(".popup_exit_button").addClass('popup_exit_button_active');
+	  	$('.list_item_text').focus()
 
 
 	    $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон

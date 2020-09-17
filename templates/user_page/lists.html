@@ -28,9 +28,9 @@
                 <form>{% csrf_token %}<span class="del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
-                    <h4 class="note_title">{{ list.title|slice:":20" }}...</h4>
+                    <h4 class="_list_title note_title">{{ list.title|slice:":20" }}...</h4>
                     {% else %}
-                    <h4 class="note_title">{{ list.title }}</h4>
+                    <h4 class="_list_title note_title">{{ list.title }}</h4>
                     {% endif %}
                 <div class="check_list">
 
@@ -43,7 +43,7 @@
                                     {% csrf_token %}
                                     <div class="list_item">
                                         <input class="checkbox" type="checkbox" checked>
-                                        <label value="{{ n }}">{{ string|slice:"6:" }}</label>
+                                        <label class="_label active_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
                                     </div>
                                 </form>
                                 {% update_variable n as n %}
@@ -52,7 +52,7 @@
                                     {% csrf_token %}
                                     <div class="list_item">
                                         <input class="checkbox" type="checkbox">
-                                        <label value="{{ n }}">{{ string|slice:"6:" }}</label>
+                                        <label class="_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
                                     </div>
                                 </form>
                                 {% update_variable n as n %}
