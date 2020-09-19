@@ -25,7 +25,7 @@
         <div class="list_grid note_grid" style="grid-row: 1 / 7;">
             {% for list in list_list %}
             <div class="note list" value="{{ list.id }}">
-                <form>{% csrf_token %}<span class="del_button"></span></form>
+                <form class="_del_form">{% csrf_token %}<span class="del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
                     <h4 class="_list_title note_title">{{ list.title|slice:":20" }}...</h4>

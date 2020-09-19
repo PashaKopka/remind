@@ -60,7 +60,8 @@ $(document).ready(function(){
   $('.note').click(function(){
   if(($(event.target).attr('class') != '_label') && ($(event.target).attr('class') != '_label active_label')
      && ($(event.target).attr('class') != 'list_item') && ($(event.target).attr('class') != '_list_title note_title')
-     && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')) {
+     && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')
+     && ($(event.target).attr('class') != '_del_form')) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('input').val()
@@ -246,7 +247,10 @@ $(document).ready(function(){
 
 
   $('.list').click(function(){
-  	if((event.target === this || ($(event.target).attr('class') == '_list_title note_title')) && $(event.target).attr('class') != 'list_item') {
+  	if((event.target === this || ($(event.target).attr('class') == '_list_title note_title')
+  	 || $(event.target).attr('class') == 'list_item' || ($(event.target).attr('class') == '_del_form') )
+//  	 && $(event.target).attr('class') != 'list_item'
+  	 ) {
   		var list_item_text_arr = []
   		id = $(this).attr('value')
 	    title = $(this).find('h4').html()
@@ -339,16 +343,29 @@ $(document).ready(function(){
   	}
   })
 
-  $('.list_item').click(function(){
-  	if ($(this).find('input').is(':checked'))
+  $('.list_item label').click(function(){
+  	if ($(this).parent().find('input').is(':checked'))
 		{
-			$(this).find('input').prop('checked', false);
-			$(this).find('label').removeClass('active_label')
+			$(this).parent().find('input').prop('checked', false);
+			$(this).removeClass('active_label')
 		}
 		else
 		{
-			$(this).find('input').prop('checked', true);
-			$(this).find('label').addClass('active_label')
+			$(this).parent().find('input').prop('checked', true);
+			$(this).addClass('active_label')
+		}
+  })
+
+  $('.list_item input').click(function(){
+  	if (!$(this).is(':checked'))
+		{
+			$(this).prop( "checked", false )
+			$(this).parent().find('label').removeClass('active_label')
+		}
+		else
+		{
+			$(this).prop( "checked", true )
+			$(this).parent().find('label').addClass('active_label')
 		}
   })
 

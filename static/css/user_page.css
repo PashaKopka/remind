@@ -320,6 +320,7 @@ header{
 	color: #fff;
 }
 .sitebar_element a{
+    display: flex;
 	color: #fff;
 	text-decoration: none;
 	font-size: 20px;
