@@ -73,7 +73,8 @@
 			url: 'del',
 			data: {
 			    csrfmiddlewaretoken: getCookie('csrftoken'),
-				id: $(this).closest('.note').attr('value')
+				id: $(this).closest('.note').attr('value'),
+				_del: 0
 			},
 			success:function(){
 

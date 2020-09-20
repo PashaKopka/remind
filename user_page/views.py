@@ -12,6 +12,41 @@ from .models import Note, List, User, Project
 from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm, EditNoteForm, EditListForm
 
 
+# Users
+
+class LoginView(djLoginView):
+    """Login"""
+    template_name = 'user_page/login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('profile')
+
+    def get_success_url(self):
+        return self.success_url
+
+
+class SignInView(CreateView):
+    """SignIn"""
+    model = User
+    template_name = 'user_page/signin.html'
+    form_class = SignInForm
+    success_url = reverse_lazy('profile')
+    success_msg = 'Success'
+
+    def form_valid(self, form):
+        form_valid = super().form_valid(form)
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        aut_user = authenticate(username=username, password=password)
+        login(self.request, aut_user)
+        return form_valid
+
+
+class LogoutView(djLogoutView):
+    next_page = reverse_lazy('login')
+
+
+# Notes
+
 class ProfileView(View):
     """List of films"""
 
@@ -20,10 +55,10 @@ class ProfileView(View):
         query = request.GET.get('q')
         if query:
             note_list = Note.objects.filter(
-                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user.id)
+                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user.id) & Q(draft=False)
             )
             list_list = List.objects.filter(
-                Q(title__icontains=query) & Q(user_id=user.id)
+                Q(title__icontains=query) & Q(user_id=user.id) & Q(draft=False)
             )
             project_list = Project.objects.filter(
                 Q(title__icontains=query) & Q(user_id=user.id)
@@ -66,7 +101,12 @@ class EditNoteView(View):
 class DelNoteView(View):
 
     def post(self, request):
-        print(request.POST)
+        if request.POST['_del'] == '1':
+            id = request.POST['id']
+            Note.objects.get(id=id).delete()
+
+            return redirect('bin')
+
         id = request.POST['id']
         note = Note.objects.get(id=id)
         note.draft = True
@@ -75,36 +115,7 @@ class DelNoteView(View):
         return redirect('profile')
 
 
-class LoginView(djLoginView):
-    """Login"""
-    template_name = 'user_page/login.html'
-    form_class = LoginForm
-    success_url = reverse_lazy('profile')
-
-    def get_success_url(self):
-        return self.success_url
-
-
-class SignInView(CreateView):
-    """SignIn"""
-    model = User
-    template_name = 'user_page/signin.html'
-    form_class = SignInForm
-    success_url = reverse_lazy('profile')
-    success_msg = 'Success'
-
-    def form_valid(self, form):
-        form_valid = super().form_valid(form)
-        username = form.cleaned_data["username"]
-        password = form.cleaned_data["password"]
-        aut_user = authenticate(username=username, password=password)
-        login(self.request, aut_user)
-        return form_valid
-
-
-class LogoutView(djLogoutView):
-    next_page = reverse_lazy('login')
-
+# Lists
 
 class ListView(View):
     """List of films"""
@@ -172,6 +183,13 @@ class EditListView(View):
 class DelListView(View):
 
     def post(self, request):
+        print('sda')
+        if request.POST['_del'] == '1':
+            id = request.POST['id']
+            List.objects.get(id=id).delete()
+
+            return redirect('bin')
+
         id = request.POST['id']
         list_text = List.objects.get(id=id)
         list_text.draft = True
@@ -179,6 +197,8 @@ class DelListView(View):
 
         return redirect('lists')
 
+
+# Projects
 
 class ProjectsView(View):
     """List of projects"""
@@ -222,3 +242,14 @@ class ProjectDetailView(View):
     def get(self, request, id):
         project = Project.objects.get(id=id)
         return render(request, 'user_page/project_detail.html', {'project': project})
+
+
+# Bin
+
+class BinView(View):
+
+    def get(self, request):
+        user = request.user
+        notes = Note.objects.filter(user=user, draft=True)
+        lists = List.objects.filter(user=user, draft=True)
+        return render(request, 'user_page/bin.html', {'note_list': notes, 'lists_list': lists})

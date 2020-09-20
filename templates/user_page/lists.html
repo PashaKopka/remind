@@ -116,7 +116,8 @@
 			url: 'del',
 			data: {
 			    csrfmiddlewaretoken: getCookie('csrftoken'),
-				id: $(this).closest('.list').attr('value')
+				id: $(this).closest('.list').attr('value'),
+				_del: 0
 			},
 			success:function(){
 

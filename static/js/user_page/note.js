@@ -265,10 +265,7 @@ $(document).ready(function(){
                     "<input type='hidden' name='id' value=" + id + ">"+
                     "<input class='title_input' value='" + title + "' type='text' name='title'>"+
                         "<div class='check_list list_items_block'>"+
-                            "<div class='_list_item'>"+
-                                "<input class='checkbox' type='checkbox'>"+
-                                "<input class='list_item_text' type='text' value=''>"+
-                            "</div>"+
+
     					"</div>"+
 							"<input name='list' value='' id='list_input' type='hidden'>"+
 							"<div class='buttons_block'>"+
@@ -298,6 +295,13 @@ $(document).ready(function(){
                 }
             }
         };
+        $('.list_items_block').append(
+            "<div class='_list_item'>"+
+                "<input class='checkbox' type='checkbox' checked>"+
+                "<input class='list_item_text' type='text' value=''>"+
+            "</div>"
+        )
+        $('._list_item:last-child').find('input[type="text"]').focus()
 	    $(".popup_background").addClass('popup_background_active');
 	  	$(".popup_exit_button").addClass('popup_exit_button_active');
 

@@ -26,4 +26,9 @@ urlpatterns = [
     path('projects/', views.ProjectsView.as_view(), name='projects'),
     path('project_detail/<int:id>/', views.ProjectDetailView.as_view(), name='project_detail'),
     path('add_project/<slug:username>/', views.AddProjectView.as_view(), name='add_project'),
+
+    # Bin
+    path('bin/', views.BinView.as_view(), name='bin'),
+    path('bin/list_del', views.DelListView.as_view(), name='bin_list_del'),
+    path('bin/note_del', views.DelNoteView.as_view(), name='bin_note_del'),
 ]
