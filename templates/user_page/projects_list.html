@@ -1,89 +1,77 @@
+{% extends 'user_page/base.html' %}
 {% load filter_tags %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Projects</title>
-</head>
-<body>
-
-<style>
-    .active_note{
-        background: grey;
-    }
-    .active_list{
-        background: grey;
-    }
-
-</style>
-
-<ul>
-    {% for project in projects %}
-    <li>{{ project.title }}</li>
-    {% endfor %}
-</ul>
-
-<br>
-{% for project in projects_list %}
-<a href="{% url 'project_detail' project.id %}">{{ project.title }}</a>
-{% endfor %}
-<br><br>
-
-<form action="{% url 'add_project' request.user.get_username %}" method="post">
-    {% csrf_token %}
-
-    <label>Title</label><br>
-    <input type="text" name="title"><br>
-
-    <input id="note_id" type="hidden" name="note_id" value="">
-    <input id="list_id" type="hidden" name="list_id" value="">
-
-    <h2>Notes:</h2>
-    <ul>
-        {% for note in note_list %}
-        <li class="note" value="{{ note.id }}">
-            <h4>{{ note.title }}</h4>
-            <p>{{ note.text }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <h2>Lists:</h2>
-    <ul>
-        {% for list in lists_list %}
-        <li class="list" value="{{ list.id }}">
-            <h4>{{ list.title }}</h4>
-            {% with list.list|split:"%%_next_%%" as array %}
-                <div>
-                    {% for string in array %}
-                        {% if string == '' %}
-                        {% elif string|slice:":6" == 'done=1' %}
-                            <input type="checkbox" checked>
-                            <label>{{ string|slice:"6:" }}</label><br>
-                        {% else %}
-                            <input type="checkbox">
-                            <label>{{ string|slice:"6:" }}</label><br>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% endwith %}
-        </li>
-        {% endfor %}
-    </ul>
-
-    <label>Time of everyday remind</label><br>
-    <input type="datetime-local" name="every_day_remind"><br>
-
-    <label>Deadline</label><br>
-    <input type="date" name="deadline"><br>
+{% block notes %}
 
 
-    <input id="submit" type="submit">
-</form>
+<div class="main_container">
+
+    <a href="{% url 'add_project' request.user.get_username %}">
+        <div class="add_project_button">
+            <span></span>
+        </div>
+    </a>
+
+    {% include 'include/sitebar.html' %}
+
+    <section class="note_section">
+        <div class="project_grid">
+            {% for project in projects_list %}
+            <a value="{{ project.id }}" class="project" href="{% url 'project_detail' project.id %}">
+                <form>{% csrf_token %}<span class="del_button"></span></form>
+                {% if project.title|length > 20 %}
+                <h4 class="project_title">{{ project.title|slice:":20" }}...</h4>
+                {% else %}
+                <h4 class="project_title">{{ project.title }}</h4>
+                {% endif %}
+            </a>
+            {% empty %}
+            <h1 class="trouble_messege">it's too empty here. <span class="add_project_a">let's fix it</span></h1>
+            {% endfor %}
+        </div>
+    </section>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="{% static 'js/script.js' %}"></script>
 
-</body>
-</html>
+<script>
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+	$('.del_button').click(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: 'POST',
+			url: 'del',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: $(this).closest('.project').attr('value'),
+				_del: 0
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.project').remove()
+	})
+
+
+
+</script>
+
+{% endblock notes %}

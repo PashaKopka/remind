@@ -61,7 +61,7 @@ class ProfileView(View):
                 Q(title__icontains=query) & Q(user_id=user.id) & Q(draft=False)
             )
             project_list = Project.objects.filter(
-                Q(title__icontains=query) & Q(user_id=user.id)
+                Q(title__icontains=query) & Q(user_id=user.id) & Q(draft=False)
             )
             return render(request, 'user_page/search.html',
                           {'note_list': note_list, 'list_list': list_list, 'project_list': project_list})
@@ -183,7 +183,6 @@ class EditListView(View):
 class DelListView(View):
 
     def post(self, request):
-        print('sda')
         if request.POST['_del'] == '1':
             id = request.POST['id']
             List.objects.get(id=id).delete()
@@ -205,11 +204,8 @@ class ProjectsView(View):
 
     def get(self, request):
         user = request.user
-        projects = Project.objects.filter(user=user)
-        notes = Note.objects.filter(user=user)
-        lists = List.objects.filter(user=user)
-        return render(request, 'user_page/projects_list.html',
-                      {'projects_list': projects, 'note_list': notes, 'lists_list': lists})
+        projects = Project.objects.filter(user=user, draft=False)
+        return render(request, 'user_page/projects_list.html', {'projects_list': projects})
 
 
 class AddProjectView(View):
@@ -242,6 +238,23 @@ class ProjectDetailView(View):
     def get(self, request, id):
         project = Project.objects.get(id=id)
         return render(request, 'user_page/project_detail.html', {'project': project})
+
+
+class DelProjectView(View):
+
+    def post(self, request):
+        if request.POST['_del'] == '1':
+            id = request.POST['id']
+            Project.objects.get(id=id).delete()
+
+            return redirect('bin')
+
+        id = request.POST['id']
+        project = Project.objects.get(id=id)
+        project.draft = True
+        project.save()
+
+        return redirect('projects')
 
 
 # Bin
