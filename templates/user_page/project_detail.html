@@ -1,42 +1,136 @@
+{% extends 'user_page/base.html' %}
 {% load filter_tags %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ project.title }}</title>
-</head>
-<body>
+{% block notes %}
 
-<h1>{{ project.title }}</h1>
-<h2>Notes:</h2>
-{% for note in project.note.all %}
-<div>
-    <h4>{{ note.title }}</h4>
-    <h5>{{ note.text }}</h5>
-</div>
-{% endfor %}
 
-<h2>Lists:</h2>
-{% for list in project.list.all %}
-<div>
-    <h4>{{ list.title }}</h4>
-    {% with list.list|split:"%%_next_%%" as array %}
-                <div>
-                    {% for string in array %}
-                        {% if string == '' %}
-                        {% elif string|slice:":6" == 'done=1' %}
-                            <input type="checkbox" checked>
-                            <label>{{ string|slice:"6:" }}</label><br>
-                        {% else %}
-                            <input type="checkbox">
-                            <label>{{ string|slice:"6:" }}</label><br>
-                        {% endif %}
-                    {% endfor %}
+<div class="main_container">
+
+    <a href="{% url 'add_project' request.user.get_username %}">
+        <div class="add_project_button">
+            <span></span>
+        </div>
+    </a>
+
+    {% include 'include/sitebar.html' %}
+
+    <section class="note_section project_section">
+        <h1 class="title">{{ project.title }}</h1>
+        <div class="project_block">
+
+            <h1>Notes</h1>
+            <div class="note_grid">
+                {% for note in project.note.all %}
+                <div class="note project_note" value="{{ note.id }}">
+                    <form><span class="del_button"></span></form>
+                    <h4 class="note_title">{{ note.title }}</h4>
                 </div>
-            {% endwith %}
-</div>
-{% endfor %}
+                {% empty %}
+                <h1 style="margin: 0;color: #404040">No notes</h1>
+                {% endfor %}
+            </div>
 
-</body>
-</html>
+            <h1>Lists</h1>
+            <div class="list_grid note_grid">
+                {% for list in project.list.all %}
+                <div class="project_list note list" value="{{ list.id }}">
+                    <form class="_del_form"><span class="del_button"></span></form>
+                    <h4 class="_list_title note_title">{{ list.title }}</h4>
+                </div>
+                {% empty %}
+                <h1 style="margin: 0;color: #404040">No lists</h1>
+                {% endfor %}
+            </div>
+
+            <div class="styling_block">
+                <label class="container">
+                    <input value='white' name="color" type="radio" checked="checked">
+                    <span id="white" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='green' name="color" type="radio">
+                    <span id="green" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='red' name="color" type="radio">
+                    <span id="red" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='blue' name="color" type="radio">
+                    <span id="blue" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='fiolet' name="color" type="radio">
+                    <span id="fiolet" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='orange' name="color" type="radio">
+                    <span id="orange" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='roze' name="color" type="radio">
+                    <span id="roze" class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="every_day_remind_block">
+                <label id="lab_every_day" for="every_day_remind">Every day remind</label>
+                <label id="lab_deadline" for="deadline">Deadline</label>
+                <input id="deadline" name="deadline" type="time">
+                <input id="every_day_remind" name="every_day_remind" type="datetime-local">
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+	$('.del_button').click(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: 'POST',
+			url: 'del',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: $(this).closest('.project').attr('value'),
+				_del: 0
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.project').remove()
+	})
+
+
+
+
+</script>
+
+{% endblock notes %}

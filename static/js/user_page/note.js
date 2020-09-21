@@ -39,7 +39,7 @@ $(document).ready(function(){
 				}
 
 		}else{
-		if (note_arr[i].attr('class') != 'note list'){
+		if (note_arr[i].attr('class') != 'note list' && note_arr[i].find('p').length){
             if (note_arr[i].find('p').html().length <= 150) {
                     $(note_arr[i]).css('grid-row', (start + ' / ' + (start + 1)));
                 }else if(note_arr[i].html().length > 150 && (note_arr[i].html()).length <= 250){
@@ -536,6 +536,26 @@ $(document).ready(function(){
 		});
 
 
+  })
+
+    $('.container input[name="color"]').click(function(){
+  	let color = $(this).prop('value')
+
+  	if (color == 'white'){
+  		$('.project_block').css('background', '#fff')
+  	} else if (color == 'green'){
+  		$('.project_block').css('background', '#B3FFEE')
+  	} else if (color == 'red'){
+  		$('.project_block').css('background', '#F0A1B9')
+  	} else if (color == 'blue'){
+  		$('.project_block').css('background', '#B1B5E0')
+  	} else if (color == 'fiolet'){
+  		$('.project_block').css('background', '#E0B3FA')
+  	} else if (color == 'orange'){
+  		$('.project_block').css('background', '#FDBBA2')
+  	} else if (color == 'roze'){
+  		$('.project_block').css('background', '#FFAFD6')
+  	}
   })
 
 });
