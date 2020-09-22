@@ -794,3 +794,24 @@ section{
 .every_day_remind_block label#lab_deadline{
 	margin-left: -120px;
 }
+.green{
+    background-color: #B3FFEE;
+}
+.red{
+    background-color: #F0A1B9;
+}
+.blue{
+    background-color: #B1B5E0;
+}
+.fiolet{
+    background-color: #E0B3FA;
+}
+.orange{
+    background-color: #FDBBA2;
+}
+.roze{
+    background-color: #FFAFD6;
+}
+.white{
+    background-color: #fff;
+}

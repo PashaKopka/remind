@@ -16,7 +16,7 @@
 
     <section class="note_section project_section">
         <h1 class="title">{{ project.title }}</h1>
-        <div class="project_block">
+        <div class="project_block {{ project.style }}">
 
             <h1>Notes</h1>
             <div class="note_grid">
@@ -42,49 +42,54 @@
                 {% endfor %}
             </div>
 
-            <div class="styling_block">
-                <label class="container">
-                    <input value='white' name="color" type="radio" checked="checked">
-                    <span id="white" class="checkmark"></span>
-                </label>
+            <form>
+                {% csrf_token %}
 
-                <label class="container">
-                    <input value='green' name="color" type="radio">
-                    <span id="green" class="checkmark"></span>
-                </label>
+                <div class="styling_block">
+                    <label class="container">
+                        <input value='white' name="color" type="radio">
+                        <span id="white" class="checkmark"></span>
+                    </label>
 
-                <label class="container">
-                    <input value='red' name="color" type="radio">
-                    <span id="red" class="checkmark"></span>
-                </label>
+                    <label class="container">
+                        <input value='green' name="color" type="radio">
+                        <span id="green" class="checkmark"></span>
+                    </label>
 
-                <label class="container">
-                    <input value='blue' name="color" type="radio">
-                    <span id="blue" class="checkmark"></span>
-                </label>
+                    <label class="container">
+                        <input value='red' name="color" type="radio">
+                        <span id="red" class="checkmark"></span>
+                    </label>
 
-                <label class="container">
-                    <input value='fiolet' name="color" type="radio">
-                    <span id="fiolet" class="checkmark"></span>
-                </label>
+                    <label class="container">
+                        <input value='blue' name="color" type="radio">
+                        <span id="blue" class="checkmark"></span>
+                    </label>
 
-                <label class="container">
-                    <input value='orange' name="color" type="radio">
-                    <span id="orange" class="checkmark"></span>
-                </label>
+                    <label class="container">
+                        <input value='fiolet' name="color" type="radio">
+                        <span id="fiolet" class="checkmark"></span>
+                    </label>
 
-                <label class="container">
-                    <input value='roze' name="color" type="radio">
-                    <span id="roze" class="checkmark"></span>
-                </label>
-            </div>
+                    <label class="container">
+                        <input value='orange' name="color" type="radio">
+                        <span id="orange" class="checkmark"></span>
+                    </label>
 
-            <div class="every_day_remind_block">
-                <label id="lab_every_day" for="every_day_remind">Every day remind</label>
-                <label id="lab_deadline" for="deadline">Deadline</label>
-                <input id="deadline" name="deadline" type="time">
-                <input id="every_day_remind" name="every_day_remind" type="datetime-local">
-            </div>
+                    <label class="container">
+                        <input value='roze' name="color" type="radio">
+                        <span id="roze" class="checkmark"></span>
+                    </label>
+                </div>
+
+            </form>
+
+                <div class="every_day_remind_block">
+                    <label id="lab_every_day" for="every_day_remind">Every day remind</label>
+                    <label id="lab_deadline" for="deadline">Deadline</label>
+                    <input id="deadline" name="deadline" type="time">
+                    <input id="every_day_remind" name="every_day_remind" type="datetime-local">
+                </div>
 
         </div>
     </section>
@@ -93,6 +98,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
+
+    $('#{{ project.style }}').parent().find('input').prop('checked', true)
 
     function getCookie(name) {
         var cookieValue = null;
@@ -110,23 +117,23 @@
         return cookieValue;
     }
 
-	$('.del_button').click(function(e) {
-		e.preventDefault();
+	$('.container input[name="color"]').click(function() {
 
 		$.ajax({
 			type: 'POST',
-			url: 'del',
+			url: '/userpage/project_detail/color/',
 			data: {
 			    csrfmiddlewaretoken: getCookie('csrftoken'),
-				id: $(this).closest('.project').attr('value'),
-				_del: 0
+				color: $(this).val(),
+				id: '{{ project.id }}'
 			},
 			success:function(){
 
 			}
 		})
 		$(this).closest('.project').remove()
-	})
+	});
+
 
 
 

@@ -257,6 +257,19 @@ class DelProjectView(View):
         return redirect('projects')
 
 
+class ChangeColorProjectView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = int(request.POST['id'])
+        color = request.POST['color']
+        project = Project.objects.get(id=id)
+        project.style = color
+        project.save()
+
+        return redirect('projects')
+
+
 # Bin
 
 class BinView(View):
