@@ -25,12 +25,12 @@
         <div class="list_grid note_grid" style="grid-row: 1 / 7;">
             {% for list in list_list %}
             <div class="note list" value="{{ list.id }}">
-                <form>{% csrf_token %}<span class="del_button"></span></form>
+                <form class="_del_form">{% csrf_token %}<span class="del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
-                    <h4 class="note_title">{{ list.title|slice:":20" }}...</h4>
+                    <h4 class="_list_title note_title">{{ list.title|slice:":20" }}...</h4>
                     {% else %}
-                    <h4 class="note_title">{{ list.title }}</h4>
+                    <h4 class="_list_title note_title">{{ list.title }}</h4>
                     {% endif %}
                 <div class="check_list">
 
@@ -43,7 +43,7 @@
                                     {% csrf_token %}
                                     <div class="list_item">
                                         <input class="checkbox" type="checkbox" checked>
-                                        <label value="{{ n }}">{{ string|slice:"6:" }}</label>
+                                        <label class="_label active_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
                                     </div>
                                 </form>
                                 {% update_variable n as n %}
@@ -52,7 +52,7 @@
                                     {% csrf_token %}
                                     <div class="list_item">
                                         <input class="checkbox" type="checkbox">
-                                        <label value="{{ n }}">{{ string|slice:"6:" }}</label>
+                                        <label class="_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
                                     </div>
                                 </form>
                                 {% update_variable n as n %}
@@ -90,8 +90,7 @@
         return cookieValue;
     }
 
-	$('.list_item').click(function(e) {
-		e.preventDefault();
+	$('.list_item').click(function() {
 
 		$.ajax({
 			type: 'POST',
@@ -116,7 +115,8 @@
 			url: 'del',
 			data: {
 			    csrfmiddlewaretoken: getCookie('csrftoken'),
-				id: $(this).closest('.list').attr('value')
+				id: $(this).closest('.list').attr('value'),
+				_del: 0
 			},
 			success:function(){
 

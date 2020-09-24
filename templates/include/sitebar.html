@@ -3,28 +3,32 @@
 <div class="sitebar">
     <ul class="sitebar_list">
         <li class="sitebar_element">
-            <div class="icon">
-                <i id="note_icon" class="far fa-sticky-note"></i>
-            </div>
-            <a href="{% url 'profile' %}">Notes</a>
+            <a href="{% url 'profile' %}">
+                <div class="icon">
+                    <i id="note_icon" class="far fa-sticky-note"></i>
+                </div>
+            Notes</a>
         </li>
         <li class="sitebar_element">
-            <div class="icon">
-                <i class="fas fa-list-ul"></i>
-            </div>
-            <a href="{% url 'lists' %}">Lists</a>
+            <a href="{% url 'lists' %}">
+                <div class="icon">
+                    <i class="fas fa-list-ul"></i>
+                </div>
+            Lists</a>
         </li>
         <li class="sitebar_element">
-            <div class="icon">
-                <i id="project_icon" class="fas fa-project-diagram"></i>
-            </div>
-            <a href="{% url 'projects' %}">Projects</a>
+            <a href="{% url 'projects' %}">
+                <div class="icon">
+                    <i id="project_icon" class="fas fa-project-diagram"></i>
+                </div>
+            Projects</a>
         </li>
         <li class="sitebar_element">
-            <div class="icon">
-                <i class="far fa-trash-alt"></i>
-            </div>
-            <a href="">Bin</a>
+            <a href="{% url 'bin' %}">
+                <div class="icon">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            Bin</a>
         </li>
     </ul>
 </div>

@@ -320,6 +320,7 @@ header{
 	color: #fff;
 }
 .sitebar_element a{
+    display: flex;
 	color: #fff;
 	text-decoration: none;
 	font-size: 20px;
@@ -399,7 +400,9 @@ section{
 }
 
 .add_list_button,
-.add_note_button{
+.add_note_button,
+.add_project_button
+{
 	display: block;
 	position: fixed;
 	right: 30px;
@@ -415,7 +418,8 @@ section{
 	cursor: pointer;
 }
 .add_list_button span,
-.add_note_button span{
+.add_note_button span,
+.add_project_button span{
 	display: block;
 	width: 27px;
 	height: 5px;
@@ -423,7 +427,8 @@ section{
 	border-radius: 5px;
 }
 .add_list_button span::before,
-.add_note_button span::before{
+.add_note_button span::before,
+.add_project_button span::before{
 	position: relative;
 	content: '';
 	display: block;
@@ -545,4 +550,268 @@ section{
 .del_button::after{
 	right: 5px;
 	transform: rotate(-45deg);
+}
+.active_label{
+    text-decoration: line-through;
+}
+
+
+.project_grid{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 700px;
+    grid-row: 1 / 7;
+
+
+}
+.project{
+    width: 100%;
+    height: 150px;
+    margin: 10px 0;
+    text-decoration: none;
+
+	background-color: #F5F7FA;
+	border: 2px #50C1E9 solid;
+	border-radius: 5px;
+	font-size: 20px;
+	box-shadow: 0px 0px #BABBAB;
+	padding: 10px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	top: auto;
+	cursor: pointer;
+	transition: .2s;
+}
+.project_title{
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+}
+.project:hover{
+	box-shadow: 0px 1px #BABBAB;
+}
+.project .del_button{
+    left: 675px;
+}
+.project:hover .del_button{opacity: 1;}
+
+
+.project_section{
+	display: grid;
+	grid-template-rows: 30px auto;
+	grid-template-columns: 100%;
+	padding-top: 100px;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+.project_section .note_grid{
+	grid-template-columns: 1fr 1fr 1fr 1fr !important;
+}
+.project_block{
+	margin-top: 30px;
+	box-shadow: 0 0 5px;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+
+	display: grid;
+	grid-template-rows: 60px auto 60px auto 60px 100px;
+	padding-left: 15px;
+}
+.project_block h1{
+	font-size: 23px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	color: #000;
+	padding-top: 30px;
+	padding-left: 20px;
+}
+.project_section .title{
+	font-size: 28px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 700;
+	color: #000;
+}
+.project_note{
+	height: 90px;
+	min-height: 90px !important;
+	grid-row: auto !important;
+}
+.project_list{
+	height: 96px !important;
+	min-height: 96px !important;
+	grid-row: auto !important;
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* When the radio button is checked, add a blue background */
+
+.checkmark::before{
+  content: "";
+  display: block;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  top: -6px;
+  left: -6px;
+  border-radius: 50%;
+  border: 2px #fff solid;
+  opacity: 0;
+  transition: .2s;
+}
+
+.container input ~ #green {
+  background-color: #08ffc8;
+}
+.container input ~ #red {
+  background-color: #e42c64;
+}
+.container input ~ #blue {
+  background-color: #515bd4;
+}
+.container input ~ #fiolet {
+  background-color: #8134af;
+}
+.container input ~ #orange {
+  background-color: #de4307;
+}
+.container input ~ #roze {
+  background-color: #F54EA2;
+}
+.container input ~ #white {
+  background-color: #babbab;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container input:checked ~ #green::before{
+  border: 2px #08ffc8 solid;
+  opacity: 1;
+}
+.container input:checked ~ #red::before{
+  border: 2px #e42c64 solid;
+  opacity: 1;
+}
+.container input:checked ~ #blue::before{
+  border: 2px #515bd4 solid;
+  opacity: 1;
+}
+.container input:checked ~ #fiolet::before{
+  border: 2px #8134af solid;
+  opacity: 1;
+}
+.container input:checked ~ #orange::before{
+  border: 2px #de4307 solid;
+  opacity: 1;
+}
+.container input:checked ~ #roze::before{
+  border: 2px #F54EA2 solid;
+  opacity: 1;
+}
+.container input:checked ~ #white::before{
+  border: 2px #babbab solid;
+  opacity: 1;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 7px;
+  transform: rotate(-45deg);
+
+  width: 20px;
+  height: 10px;
+
+  border-bottom: 5px white solid;
+  border-left: 5px white solid;
+}
+
+.styling_block{
+	display: flex;
+	margin-left: 50px;
+}
+
+.every_day_remind_block{
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: auto auto;
+	padding: 20px;
+}
+.every_day_remind_block input{
+	width: 200px;
+	justify-self: center;
+}
+.every_day_remind_block label{
+	font-size: 20px;
+	justify-self: center;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	color: #000;
+}
+.every_day_remind_block label#lab_every_day{
+	margin-left: -45px;
+}
+.every_day_remind_block label#lab_deadline{
+	margin-left: -120px;
+}
+.green{
+    background-color: #B3FFEE;
+}
+.red{
+    background-color: #F0A1B9;
+}
+.blue{
+    background-color: #B1B5E0;
+}
+.fiolet{
+    background-color: #E0B3FA;
+}
+.orange{
+    background-color: #FDBBA2;
+}
+.roze{
+    background-color: #FFAFD6;
+}
+.white{
+    background-color: #fff;
 }

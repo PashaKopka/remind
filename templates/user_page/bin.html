@@ -24,25 +24,25 @@
         <div class="note_grid">
             {% for note in note_list %}
             <div class="note" value="{{ note.id }}">
-                    <form>{% csrf_token %}<span class="note_del_button del_button"></span></form>
-                    <input type="hidden" value="{{ note.text }}">
-                    {% if note.title|length > 20 %}
-                    <h4 class="note_title">{{ note.title|slice:":20" }}...</h4>
-                    {% else %}
-                    <h4 class="note_title">{{ note.title }}</h4>
-                    {% endif %}
-                    {% if note.text|length >= 150 %}
-                    <p class="text">{{ note.text|slice:":150" }}...</p>
-                    {% else %}
-                    <p class="text">{{ note.text }}</p>
-                    {% endif %}
-                </div>
+                <form>{% csrf_token %}<span class="note_del_button del_button"></span></form>
+                <input type="hidden" value="{{ note.text }}">
+                {% if note.title|length > 20 %}
+                <h4 class="note_title">{{ note.title|slice:":20" }}...</h4>
+                {% else %}
+                <h4 class="note_title">{{ note.title }}</h4>
+                {% endif %}
+                {% if note.text|length >= 150 %}
+                <p class="text">{{ note.text|slice:":150" }}...</p>
+                {% else %}
+                <p class="text">{{ note.text }}</p>
+                {% endif %}
+            </div>
             {% endfor %}
         </div>
 
         <h1 class="caption">Lists</h1>
         <div class="list_grid note_grid">
-            {% for list in list_list %}
+            {% for list in lists_list %}
             <div class="note list" value="{{ list.id }}">
                 <form class="_del_form">{% csrf_token %}<span class="list_del_button del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
@@ -100,9 +100,8 @@
         {% endif %}
 
     </section>
-
-
 </div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -133,7 +132,7 @@
 			data: {
 			    csrfmiddlewaretoken: getCookie('csrftoken'),
 				id: $(this).closest('.list').attr('value'),
-				_del: 0
+				_del: 1
 			},
 			success:function(){
 
@@ -147,11 +146,11 @@
 
         $.ajax({
             type: 'POST',
-            url: 'del',
+            url: 'note_del',
             data: {
                 csrfmiddlewaretoken: getCookie('csrftoken'),
                 id: $(this).closest('.note').attr('value'),
-                _del: 0
+				_del: 1
             },
             success:function(){
 
@@ -159,6 +158,7 @@
         })
         $(this).closest('.note').remove()
     })
+
 
 </script>
 

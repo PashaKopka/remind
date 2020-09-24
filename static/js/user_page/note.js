@@ -39,7 +39,7 @@ $(document).ready(function(){
 				}
 
 		}else{
-		if (note_arr[i].attr('class') != 'note list'){
+		if (note_arr[i].attr('class') != 'note list' && note_arr[i].find('p').length){
             if (note_arr[i].find('p').html().length <= 150) {
                     $(note_arr[i]).css('grid-row', (start + ' / ' + (start + 1)));
                 }else if(note_arr[i].html().length > 150 && (note_arr[i].html()).length <= 250){
@@ -58,7 +58,10 @@ $(document).ready(function(){
   })
 
   $('.note').click(function(){
-  if($(event.target).attr('class') == 'note') {
+  if(($(event.target).attr('class') != '_label') && ($(event.target).attr('class') != '_label active_label')
+     && ($(event.target).attr('class') != 'list_item') && ($(event.target).attr('class') != '_list_title note_title')
+     && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')
+     && ($(event.target).attr('class') != '_del_form')) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('input').val()
@@ -141,6 +144,7 @@ $(document).ready(function(){
 	).fadeIn(500);
     $(".popup_background").addClass('popup_background_active');
   	$(".popup_exit_button").addClass('popup_exit_button_active');
+  	$('.popup_block textarea').focus()
 
 
     $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
@@ -243,7 +247,10 @@ $(document).ready(function(){
 
 
   $('.list').click(function(){
-  	if(event.target === this || $(event.target).attr('class') == 'list_item') {
+  	if((event.target === this || ($(event.target).attr('class') == '_list_title note_title')
+  	 || $(event.target).attr('class') == 'list_item' || ($(event.target).attr('class') == '_del_form') )
+//  	 && $(event.target).attr('class') != 'list_item'
+  	 ) {
   		var list_item_text_arr = []
   		id = $(this).attr('value')
 	    title = $(this).find('h4').html()
@@ -258,10 +265,7 @@ $(document).ready(function(){
                     "<input type='hidden' name='id' value=" + id + ">"+
                     "<input class='title_input' value='" + title + "' type='text' name='title'>"+
                         "<div class='check_list list_items_block'>"+
-                            "<div class='_list_item'>"+
-                                "<input class='checkbox' type='checkbox'>"+
-                                "<input class='list_item_text' type='text' value=''>"+
-                            "</div>"+
+
     					"</div>"+
 							"<input name='list' value='' id='list_input' type='hidden'>"+
 							"<div class='buttons_block'>"+
@@ -291,6 +295,13 @@ $(document).ready(function(){
                 }
             }
         };
+        $('.list_items_block').append(
+            "<div class='_list_item'>"+
+                "<input class='checkbox' type='checkbox' checked>"+
+                "<input class='list_item_text' type='text' value=''>"+
+            "</div>"
+        )
+        $('._list_item:last-child').find('input[type="text"]').focus()
 	    $(".popup_background").addClass('popup_background_active');
 	  	$(".popup_exit_button").addClass('popup_exit_button_active');
 
@@ -340,10 +351,25 @@ $(document).ready(function(){
   	if ($(this).parent().find('input').is(':checked'))
 		{
 			$(this).parent().find('input').prop('checked', false);
+			$(this).removeClass('active_label')
 		}
 		else
 		{
 			$(this).parent().find('input').prop('checked', true);
+			$(this).addClass('active_label')
+		}
+  })
+
+  $('.list_item input').click(function(){
+  	if (!$(this).is(':checked'))
+		{
+			$(this).prop( "checked", false )
+			$(this).parent().find('label').removeClass('active_label')
+		}
+		else
+		{
+			$(this).prop( "checked", true )
+			$(this).parent().find('label').addClass('active_label')
 		}
   })
 
@@ -398,6 +424,7 @@ $(document).ready(function(){
 
 	    $(".popup_background").addClass('popup_background_active');
 	  	$(".popup_exit_button").addClass('popup_exit_button_active');
+	  	$('.list_item_text').focus()
 
 
 	    $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
@@ -509,6 +536,26 @@ $(document).ready(function(){
 		});
 
 
+  })
+
+    $('.container input[name="color"]').click(function(){
+  	let color = $(this).prop('value')
+
+  	if (color == 'white'){
+  		$('.project_block').css('background', '#fff')
+  	} else if (color == 'green'){
+  		$('.project_block').css('background', '#B3FFEE')
+  	} else if (color == 'red'){
+  		$('.project_block').css('background', '#F0A1B9')
+  	} else if (color == 'blue'){
+  		$('.project_block').css('background', '#B1B5E0')
+  	} else if (color == 'fiolet'){
+  		$('.project_block').css('background', '#E0B3FA')
+  	} else if (color == 'orange'){
+  		$('.project_block').css('background', '#FDBBA2')
+  	} else if (color == 'roze'){
+  		$('.project_block').css('background', '#FFAFD6')
+  	}
   })
 
 });
