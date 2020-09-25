@@ -64,7 +64,7 @@ $(document).ready(function(){
      && ($(event.target).attr('class') != '_del_form')) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
-    text = $(this).find('input').val()
+    text = $(this).find('._text_input').val()
     $('.popup').append(
     	"<div class='popup_background popup_background_active'></div>"+
 			"<div class='popup_exit_button popup_exit_button_active'>"+

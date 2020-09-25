@@ -614,7 +614,7 @@ section{
 	border-top-left-radius: 25px;
 
 	display: grid;
-	grid-template-rows: 60px auto 60px auto 60px 100px;
+	grid-template-rows: 60px auto 60px auto 60px 100px 100px;
 	padding-left: 15px;
 }
 .project_block h1{
@@ -703,7 +703,7 @@ section{
   background-color: #8134af;
 }
 .container input ~ #orange {
-  background-color: #de4307;
+  background-color: #FF4800;
 }
 .container input ~ #roze {
   background-color: #F54EA2;
@@ -741,7 +741,7 @@ section{
   opacity: 1;
 }
 .container input:checked ~ #orange::before{
-  border: 2px #de4307 solid;
+  border: 2px #FF4800 solid;
   opacity: 1;
 }
 .container input:checked ~ #roze::before{
@@ -814,4 +814,62 @@ section{
 }
 .white{
     background-color: #fff;
+}
+
+.add_list_block{
+    height: 96px !important;
+}
+.add_note_block,
+.add_list_block{
+	opacity: .5;
+	transition: .2s;
+	width: 235px;
+    justify-self: center;
+    background-color: #F5F7FA;
+    border: 2px #50C1E9 solid;
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow: 0px 0px #BABBAB;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    top: auto;
+    cursor: pointer;
+}
+.add_note_block:hover,
+.add_list_block:hover{
+	opacity: 1;
+}
+#add_note,
+#add_list{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #50C1E9;
+	position: relative;
+	top: 12px;
+	left: 80px;
+}
+#add_note{
+    top: 8px;
+}
+#add_note::before,
+#add_note::after,
+#add_list::before,
+#add_list::after{
+	display: block;
+	content: '';
+	position: relative;
+	background-color: #fff;
+	width: 27px;
+	height: 5px;
+	top: 23px;
+	left: 11px;
+	border-radius: 5px;
+}
+#add_note::after,
+#add_list::after{
+	transform: rotate(90deg);
+	top: 18px;
 }

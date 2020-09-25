@@ -6,6 +6,15 @@
 
 <div class="main_container">
 
+    <div class="popup">
+        <form id="edit_form" action="{% url 'edit_note' %}" method='post'>
+            {% csrf_token %}
+        </form>
+        <form id="add_form" action="{% url 'add_note' request.user.get_username %}" method='post'>
+            {% csrf_token %}
+        </form>
+    </div>
+
     <a href="{% url 'add_project' request.user.get_username %}">
         <div class="add_project_button">
             <span></span>
@@ -22,12 +31,14 @@
             <div class="note_grid">
                 {% for note in project.note.all %}
                 <div class="note project_note" value="{{ note.id }}">
+                    <input class="_text_input" type="hidden" value="{{ note.text }}">
                     <form><span class="del_button"></span></form>
                     <h4 class="note_title">{{ note.title }}</h4>
                 </div>
-                {% empty %}
-                <h1 style="margin: 0;color: #404040">No notes</h1>
                 {% endfor %}
+                <div class="add_note_block">
+                    <span id="add_note"></span>
+                </div>
             </div>
 
             <h1>Lists</h1>
@@ -37,9 +48,10 @@
                     <form class="_del_form"><span class="del_button"></span></form>
                     <h4 class="_list_title note_title">{{ list.title }}</h4>
                 </div>
-                {% empty %}
-                <h1 style="margin: 0;color: #404040">No lists</h1>
                 {% endfor %}
+                <div class="add_list_block">
+                    <span id="add_list"></span>
+                </div>
             </div>
 
             <form>

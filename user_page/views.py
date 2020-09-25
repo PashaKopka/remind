@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView as djLoginView
 from django.contrib.auth.views import LogoutView as djLogoutView
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -95,7 +96,10 @@ class EditNoteView(View):
         note.text = request.POST['text']
         note.save()
 
-        return redirect('profile')
+        # if request.POST['location'] != '':
+        #     return redirect('project_detail', id)
+        # return redirect('profile')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class DelNoteView(View):
