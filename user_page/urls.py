@@ -29,6 +29,7 @@ urlpatterns = [
     path('projects/del', views.DelProjectView.as_view(), name='project_del'),
     path('project_detail/color/', views.ChangeColorProjectView.as_view(), name='project_color'),
     path('project_detail/add_note/', views.ProjectDetailAddNoteView.as_view(), name='project_add_note'),
+    path('project_detail/add_list/', views.ProjectDetailAddListView.as_view(), name='project_add_list'),
     path('project_detail/edit_note/', views.EditProjectView.as_view(), name='edit_project'),
 
     # Bin

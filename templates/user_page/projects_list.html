@@ -17,7 +17,7 @@
     <section class="note_section">
         <div class="project_grid">
             {% for project in projects_list %}
-            <a value="{{ project.id }}" class="project" href="{% url 'project_detail' project.id %}">
+            <a value="{{ project.id }}" class="project {{ project.style }}" href="{% url 'project_detail' project.id %}">
                 <form>{% csrf_token %}<span class="del_button"></span></form>
                 {% if project.title|length > 20 %}
                 <h4 class="project_title">{{ project.title|slice:":20" }}...</h4>

@@ -275,6 +275,22 @@ class ProjectDetailAddNoteView(View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+class ProjectDetailAddListView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = int(request.POST['id'])
+        project = Project.objects.get(id=id)
+        list = List.objects.get(id=request.POST['note_id'])
+        if list in project.list.all():
+            project.list.remove(list)
+        else:
+            project.list.add(list)
+        project.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
 class DelProjectView(View):
 
     def post(self, request):

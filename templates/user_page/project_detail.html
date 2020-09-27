@@ -30,6 +30,22 @@
                 {% endfor %}
                     <a class="submit_button" href="">Save</a>
             </div>
+
+            <div class="popup_add_list">
+                {% for list in lists %}
+                {% if list in project.list.all %}
+                <div class="__list __list_active">
+                {% else %}
+                <div class="__list">
+                {% endif %}
+                    <input type="hidden" name="id" value="{{ list.id }}">
+                    <input type="checkbox" checked>
+                    {{ list.title }}
+                    <span></span>
+                </div>
+                {% endfor %}
+                    <a class="submit_button" href="">Save</a>
+            </div>
         </form>
     </div>
 
@@ -169,7 +185,6 @@
 
 			}
 		})
-		$(this).closest('.project').remove()
 	});
 
     $('.__note').click(function() {
@@ -197,14 +212,34 @@
 
 			}
 		})
-		$(this).closest('.project').remove()
 	});
 
+    $('.__list').click(function() {
 
+        if ($(this).find('input').is(':checked'))
+		{
+			$(this).removeClass('__list_active')
+			$(this).find('input').prop('checked', false);
+		}
+		else
+		{
+			$(this).addClass('__list_active')
+			$(this).find('input').prop('checked', true);
+		}
 
+		$.ajax({
+			type: 'POST',
+			url: '/userpage/project_detail/add_list/',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				note_id: $(this).find('input[name="id"]').val(),
+				id: '{{ project.id }}'
+			},
+			success:function(){
 
-
-
+			}
+		})
+	});
 
 
 
