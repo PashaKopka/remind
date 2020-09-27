@@ -260,7 +260,7 @@ $(document).ready(function(){
 				"<div class='popup_exit_button popup_exit_button_active'>"+
 					"<span></span>"+
 				"</div>").fadeIn(500);
-			$('.popup #edit_form').append(
+			$('.popup form[action="/userpage/edit_list/"]').append(
 		    	"<div class='popup_block'>"+
                     "<input type='hidden' name='id' value=" + id + ">"+
                     "<input class='title_input' value='" + title + "' type='text' name='title'>"+
@@ -297,7 +297,7 @@ $(document).ready(function(){
         };
         $('.list_items_block').append(
             "<div class='_list_item'>"+
-                "<input class='checkbox' type='checkbox' checked>"+
+                "<input class='checkbox' type='checkbox'>"+
                 "<input class='list_item_text' type='text' value=''>"+
             "</div>"
         )
@@ -556,6 +556,61 @@ $(document).ready(function(){
   	} else if (color == 'roze'){
   		$('.project_block').css('background', '#FFAFD6')
   	}
+  })
+
+  $('.add_note_block').click(function(){
+	    $('.popup').append(
+	    	"<div class='popup_background popup_background_active'></div>"+
+				"<div class='popup_exit_button popup_exit_button_active'>"+
+					"<span></span>"+
+				"</div>"
+	    	).fadeIn(500);
+	    $('.popup_add_note').addClass('popup_add_note_active')
+	    $(".popup_background").addClass('popup_background_active');
+	  	$(".popup_exit_button").addClass('popup_exit_button_active');
+
+
+	    $(".popup_exit_button").click(function(){	// Событие клика на затемненный фон
+		    $('.popup_add_note').removeClass('popup_add_note_active')
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(".popup_background").click(function(){	// Событие клика на затемненный фон
+				$('.popup_add_note').removeClass('popup_add_note_active')
+				$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+				$(".popup_exit_button").fadeOut(500);	// Медленно убираем всплывающее окно
+				setTimeout(function() {	// Выставляем таймер
+				  $(".popup_block").remove();
+				  $(".popup_background").remove()
+	  			$(".popup_exit_button").remove();
+	  			// Удаляем разметку высплывающего окна
+				}, 500);
+			});
+
+			$(document).keyup(function(e) {
+	   		  if (e.key === "Escape") {
+	   		  	$('.popup_add_note').removeClass('popup_add_note_active')
+						$(".popup_block").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_background").fadeOut(500);	// Медленно убираем всплывающее окно
+						$(".popup_exit_button").fadeOut(500);
+						setTimeout(function() {
+						  $(".popup_block").remove();
+						  $(".popup_background").remove()
+			  			$(".popup_exit_button").remove();
+						}, 500);
+	   			}
+
+		});
+
   })
 
 });

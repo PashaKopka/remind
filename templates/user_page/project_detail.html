@@ -10,8 +10,26 @@
         <form id="edit_form" action="{% url 'edit_note' %}" method='post'>
             {% csrf_token %}
         </form>
-        <form id="add_form" action="{% url 'add_note' request.user.get_username %}" method='post'>
+        <form action="{% url 'edit_list' %}" method='post'>
             {% csrf_token %}
+        </form>
+        <form id="add_form">
+            {% csrf_token %}
+            <div class="popup_add_note">
+                {% for note in notes %}
+                {% if note in project.note.all %}
+                <div class="__note __note_active">
+                {% else %}
+                <div class="__note">
+                {% endif %}
+                    <input type="hidden" name="id" value="{{ note.id }}">
+                    <input type="checkbox" checked>
+                    {{ note.title }}
+                    <span></span>
+                </div>
+                {% endfor %}
+                    <a class="submit_button" href="">Save</a>
+            </div>
         </form>
     </div>
 
@@ -22,89 +40,97 @@
     </a>
 
     {% include 'include/sitebar.html' %}
+    <form action="{% url 'edit_project' %}" method='post'>
+        {% csrf_token %}
+        <input name="id" type="hidden" value="{{ project.id }}">
+        <section class="note_section project_section">
+            <h1 class="title">{{ project.title }}</h1>
+            <div class="project_block {{ project.style }}">
 
-    <section class="note_section project_section">
-        <h1 class="title">{{ project.title }}</h1>
-        <div class="project_block {{ project.style }}">
-
-            <h1>Notes</h1>
-            <div class="note_grid">
-                {% for note in project.note.all %}
-                <div class="note project_note" value="{{ note.id }}">
-                    <input class="_text_input" type="hidden" value="{{ note.text }}">
-                    <form><span class="del_button"></span></form>
-                    <h4 class="note_title">{{ note.title }}</h4>
-                </div>
-                {% endfor %}
-                <div class="add_note_block">
-                    <span id="add_note"></span>
-                </div>
-            </div>
-
-            <h1>Lists</h1>
-            <div class="list_grid note_grid">
-                {% for list in project.list.all %}
-                <div class="project_list note list" value="{{ list.id }}">
-                    <form class="_del_form"><span class="del_button"></span></form>
-                    <h4 class="_list_title note_title">{{ list.title }}</h4>
-                </div>
-                {% endfor %}
-                <div class="add_list_block">
-                    <span id="add_list"></span>
-                </div>
-            </div>
-
-            <form>
-                {% csrf_token %}
-
-                <div class="styling_block">
-                    <label class="container">
-                        <input value='white' name="color" type="radio">
-                        <span id="white" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='green' name="color" type="radio">
-                        <span id="green" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='red' name="color" type="radio">
-                        <span id="red" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='blue' name="color" type="radio">
-                        <span id="blue" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='fiolet' name="color" type="radio">
-                        <span id="fiolet" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='orange' name="color" type="radio">
-                        <span id="orange" class="checkmark"></span>
-                    </label>
-
-                    <label class="container">
-                        <input value='roze' name="color" type="radio">
-                        <span id="roze" class="checkmark"></span>
-                    </label>
+                <h1>Notes</h1>
+                <div class="note_grid">
+                    {% for note in project.note.all %}
+                    <div class="note project_note" value="{{ note.id }}">
+                        <input class="_text_input" type="hidden" value="{{ note.text }}">
+                        <form><span class="del_button"></span></form>
+                        <h4 class="note_title">{{ note.title }}</h4>
+                    </div>
+                    {% endfor %}
+                    <div class="add_note_block">
+                        <span id="add_note"></span>
+                    </div>
                 </div>
 
-            </form>
+                <h1>Lists</h1>
+                <div class="list_grid note_grid">
+                    {% for list in project.list.all %}
+                    <div class="project_list note list" value="{{ list.id }}">
+                        <form class="_del_form"><span class="del_button"></span></form>
+                        <input class="hidden_value" type="hidden" value="{{ list.list }}">
+                        <h4 class="_list_title note_title">{{ list.title }}</h4>
+                    </div>
+                    {% endfor %}
+                    <div class="add_list_block">
+                        <span id="add_list"></span>
+                    </div>
+                </div>
+
+                <form>
+                    {% csrf_token %}
+
+                    <div class="styling_block">
+                        <label class="container">
+                            <input value='white' name="color" type="radio">
+                            <span id="white" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='green' name="color" type="radio">
+                            <span id="green" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='red' name="color" type="radio">
+                            <span id="red" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='blue' name="color" type="radio">
+                            <span id="blue" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='fiolet' name="color" type="radio">
+                            <span id="fiolet" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='orange' name="color" type="radio">
+                            <span id="orange" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='roze' name="color" type="radio">
+                            <span id="roze" class="checkmark"></span>
+                        </label>
+                    </div>
+
+                </form>
 
                 <div class="every_day_remind_block">
                     <label id="lab_every_day" for="every_day_remind">Every day remind</label>
                     <label id="lab_deadline" for="deadline">Deadline</label>
-                    <input id="deadline" name="deadline" type="time">
-                    <input id="every_day_remind" name="every_day_remind" type="datetime-local">
+                    <input value='{{ project.every_day_remind|time:"H:i" }}' id="every_day_remind"
+                           name="every_day_remind"
+                           type="time">
+                    <input value="{{ project.deadline|date:'Y-m-d' }}T{{ project.deadline|time:'H:i' }}" id="deadline"
+                           name="deadline" type="datetime-local">
                 </div>
 
-        </div>
-    </section>
+            </div>
+            <input style="margin-bottom: 10px;" type="submit" value="Save" class="submit_button">
+        </section>
+    </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -145,6 +171,38 @@
 		})
 		$(this).closest('.project').remove()
 	});
+
+    $('.__note').click(function() {
+
+        if ($(this).find('input').is(':checked'))
+		{
+			$(this).removeClass('__note_active')
+			$(this).find('input').prop('checked', false);
+		}
+		else
+		{
+			$(this).addClass('__note_active')
+			$(this).find('input').prop('checked', true);
+		}
+
+		$.ajax({
+			type: 'POST',
+			url: '/userpage/project_detail/add_note/',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				note_id: $(this).find('input[name="id"]').val(),
+				id: '{{ project.id }}'
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.project').remove()
+	});
+
+
+
+
 
 
 

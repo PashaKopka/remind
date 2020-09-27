@@ -10,7 +10,8 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView
 from .models import Note, List, User, Project
-from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm, EditNoteForm, EditListForm
+from .forms import LoginForm, SignInForm, AddNoteForm, AddListForm, AddProjectForm, EditNoteForm, EditListForm, \
+    EditProjectForm
 
 
 # Users
@@ -96,9 +97,6 @@ class EditNoteView(View):
         note.text = request.POST['text']
         note.save()
 
-        # if request.POST['location'] != '':
-        #     return redirect('project_detail', id)
-        # return redirect('profile')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
@@ -181,7 +179,7 @@ class EditListView(View):
         list_text.list = request.POST['list']
         list_text.save()
 
-        return redirect('lists')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class DelListView(View):
@@ -221,8 +219,6 @@ class AddProjectView(View):
         if form.is_valid():
             form = form.save(commit=False)
             form.user = User.objects.get_by_natural_key(username=username)
-            # form.note = Note.objects.get(id=notes_list)
-            # form.list = List.objects.get(id=lists_list)
             form.save()
 
             for note_id in request.POST['note_id'].split(' '):
@@ -240,8 +236,43 @@ class ProjectDetailView(View):
     """Project View"""
 
     def get(self, request, id):
+        user = request.user
         project = Project.objects.get(id=id)
-        return render(request, 'user_page/project_detail.html', {'project': project})
+        notes = Note.objects.filter(user=user)
+        lists = List.objects.filter(user=user)
+        return render(request, 'user_page/project_detail.html',
+                      {'project': project, 'notes': notes, 'lists': lists})
+
+
+class EditProjectView(View):
+    """Add List"""
+
+    def post(self, request):
+        form = EditProjectForm(request.POST)
+        id = request.POST['id']
+        print('\n', form.errors, '\n')
+        project = Project.objects.get(id=id)
+        project.every_day_remind = request.POST['every_day_remind']
+        project.deadline = request.POST['deadline']
+        project.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class ProjectDetailAddNoteView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = int(request.POST['id'])
+        project = Project.objects.get(id=id)
+        note = Note.objects.get(id=request.POST['note_id'])
+        if note in project.note.all():
+            project.note.remove(note)
+        else:
+            project.note.add(note)
+        project.save()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 class DelProjectView(View):
