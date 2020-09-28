@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import CreateView
 from .models import Note, List, User, Project
@@ -232,6 +233,15 @@ class AddProjectView(View):
         return redirect('projects')
 
 
+class NewProjectView(View):
+
+    def get(self, request):
+        user = User.objects.get_by_natural_key(username=request.user.get_username())
+        project = Project.objects.create(user=user, title='-', date_of_adding=timezone.now())
+        project.save()
+        return redirect('project_detail', project.id)
+
+
 class ProjectDetailView(View):
     """Project View"""
 
@@ -252,8 +262,10 @@ class EditProjectView(View):
         id = request.POST['id']
         print('\n', form.errors, '\n')
         project = Project.objects.get(id=id)
-        project.every_day_remind = request.POST['every_day_remind']
-        project.deadline = request.POST['deadline']
+        project.title = request.POST['title']
+        project.every_day_remind = request.POST['every_day_remind'] if request.POST[
+            'every_day_remind'] else None
+        project.deadline = request.POST['deadline'] if request.POST['deadline'] else None
         project.save()
 
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

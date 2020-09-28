@@ -1005,3 +1005,7 @@ section{
 	top: 4px;
 	transform: rotate(-45deg);
 }
+
+.title_project_input{
+    font-size: 28px;
+}

@@ -19,48 +19,42 @@
                 {% for note in notes %}
                 {% if note in project.note.all %}
                 <div class="__note __note_active">
-                {% else %}
-                <div class="__note">
-                {% endif %}
-                    <input type="hidden" name="id" value="{{ note.id }}">
-                    <input type="checkbox" checked>
-                    {{ note.title }}
-                    <span></span>
-                </div>
-                {% endfor %}
+                    {% else %}
+                    <div class="__note">
+                        {% endif %}
+                        <input type="hidden" name="id" value="{{ note.id }}">
+                        <input type="checkbox" checked>
+                        {{ note.title }}
+                        <span></span>
+                    </div>
+                    {% endfor %}
                     <a class="submit_button" href="">Save</a>
-            </div>
+                </div>
 
-            <div class="popup_add_list">
-                {% for list in lists %}
-                {% if list in project.list.all %}
-                <div class="__list __list_active">
-                {% else %}
-                <div class="__list">
-                {% endif %}
-                    <input type="hidden" name="id" value="{{ list.id }}">
-                    <input type="checkbox" checked>
-                    {{ list.title }}
-                    <span></span>
-                </div>
-                {% endfor %}
-                    <a class="submit_button" href="">Save</a>
-            </div>
+                <div class="popup_add_list">
+                    {% for list in lists %}
+                    {% if list in project.list.all %}
+                    <div class="__list __list_active">
+                        {% else %}
+                        <div class="__list">
+                            {% endif %}
+                            <input type="hidden" name="id" value="{{ list.id }}">
+                            <input type="checkbox" checked>
+                            {{ list.title }}
+                            <span></span>
+                        </div>
+                        {% endfor %}
+                        <a class="submit_button" href="">Save</a>
+                    </div>
         </form>
     </div>
-
-    <a href="{% url 'add_project' request.user.get_username %}">
-        <div class="add_project_button">
-            <span></span>
-        </div>
-    </a>
 
     {% include 'include/sitebar.html' %}
     <form action="{% url 'edit_project' %}" method='post'>
         {% csrf_token %}
         <input name="id" type="hidden" value="{{ project.id }}">
         <section class="note_section project_section">
-            <h1 class="title">{{ project.title }}</h1>
+            <input value="{{ project.title }}" name="title" type="text" placeholder="Title" class="title_project_input">
             <div class="project_block {{ project.style }}">
 
                 <h1>Notes</h1>
@@ -240,6 +234,7 @@
 			}
 		})
 	});
+
 
 
 

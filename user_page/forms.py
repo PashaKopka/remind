@@ -52,7 +52,7 @@ class EditProjectForm(forms.ModelForm):
 
     class Meta:
         model = Note
-        fields = ('title', 'text')
+        fields = ('title', )
 
 
 class EditListForm(forms.ModelForm):
