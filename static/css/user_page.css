@@ -470,9 +470,9 @@ section{
 }
 
 
-.check_list{
+/*.check_list{
 	display: grid;
-}
+}*/
 .list_item{
 	margin: 1px 0;
 	width: auto;

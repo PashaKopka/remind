@@ -213,6 +213,19 @@ class DelListView(View):
         return redirect('lists')
 
 
+class ChangeColorListView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = int(request.POST['id'])
+        color = request.POST['color']
+        list_object = List.objects.get(id=id)
+        list_object.style = color
+        list_object.save()
+
+        return redirect('profile')
+
+
 # Projects
 
 class ProjectsView(View):

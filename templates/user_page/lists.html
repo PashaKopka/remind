@@ -24,47 +24,89 @@
     <section>
         <div class="list_grid note_grid" style="grid-row: 1 / 7;">
             {% for list in list_list %}
-            <div class="note list" value="{{ list.id }}">
+            <div style="padding-bottom: 15px; display: grid; grid-template-columns: 215px; grid-template-rows: 0px 30px auto 20px;"
+                 class="note list {{ list.style }}" value="{{ list.id }}">
                 <form class="_del_form">{% csrf_token %}<span class="del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
-                    <h4 class="_list_title note_title">{{ list.title|slice:":20" }}...</h4>
-                    {% else %}
-                    <h4 class="_list_title note_title">{{ list.title }}</h4>
-                    {% endif %}
+                <h4 class="_list_title note_title">{{ list.title|slice:":20" }}...</h4>
+                {% else %}
+                <h4 class="_list_title note_title">{{ list.title }}</h4>
+                {% endif %}
                 <div class="check_list">
 
                     {% with list.list|split:"%%_next_%%" as array %}
                     {% with 0 as n %}
-                        {% for string in array %}
-                            {% if string == '' %}
-                            {% elif string|slice:":6" == 'done=1' %}
-                                <form>
-                                    {% csrf_token %}
-                                    <div class="list_item">
-                                        <input class="checkbox" type="checkbox" checked>
-                                        <label class="_label active_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
-                                    </div>
-                                </form>
-                                {% update_variable n as n %}
-                            {% else %}
-                                <form>
-                                    {% csrf_token %}
-                                    <div class="list_item">
-                                        <input class="checkbox" type="checkbox">
-                                        <label class="_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
-                                    </div>
-                                </form>
-                                {% update_variable n as n %}
-                            {% endif %}
-                        {% endfor %}
+                    {% for string in array %}
+                    {% if string == '' %}
+                    {% elif string|slice:":6" == 'done=1' %}
+                    <form>
+                        {% csrf_token %}
+                        <div class="list_item">
+                            <input class="checkbox" type="checkbox" checked>
+                            <label class="_label active_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
+                        </div>
+                    </form>
+                    {% update_variable n as n %}
+                    {% else %}
+                    <form>
+                        {% csrf_token %}
+                        <div class="list_item">
+                            <input class="checkbox" type="checkbox">
+                            <label class="_label" value="{{ n }}">{{ string|slice:"6:" }}</label>
+                        </div>
+                    </form>
+                    {% update_variable n as n %}
+                    {% endif %}
+                    {% endfor %}
                     {% endwith %}
                     {% endwith %}
 
                 </div>
+                <form>
+                    {% csrf_token %}
+
+                    <div class="styling_block">
+                        <label class="container">
+                            <input value='white' name="color" type="radio">
+                            <span id="white" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='green' name="color" type="radio">
+                            <span id="green" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='red' name="color" type="radio">
+                            <span id="red" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='blue' name="color" type="radio">
+                            <span id="blue" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='fiolet' name="color" type="radio">
+                            <span id="fiolet" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='orange' name="color" type="radio">
+                            <span id="orange" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='roze' name="color" type="radio">
+                            <span id="roze" class="checkmark"></span>
+                        </label>
+                    </div>
+
+                </form>
             </div>
             {% empty %}
-                <h1 class="trouble_messege">it's too empty here. <span class="add_list_a">let's fix it</span></h1>
+            <h1 class="trouble_messege">it's too empty here. <span class="add_list_a">let's fix it</span></h1>
             {% endfor %}
         </div>
     </section>
@@ -124,6 +166,24 @@
 		})
 		$(this).closest('.list').remove()
 	})
+
+	$('.container input[name="color"]').click(function() {
+
+		$.ajax({
+			type: 'POST',
+			url: '/userpage/lists/color/',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				color: $(this).val(),
+				id: $(this).closest('.note').attr('value')
+			},
+			success:function(){
+
+			}
+		})
+	});
+
+
 
 </script>
 

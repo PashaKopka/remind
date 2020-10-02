@@ -62,7 +62,8 @@ $(document).ready(function(){
      && ($(event.target).attr('class') != 'list_item') && ($(event.target).attr('class') != '_list_title note_title')
      && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')
      && ($(event.target).attr('class') != '_del_form') && ($(event.target).attr('class') != 'styling_block')
-     && ($(event.target).attr('class') != 'checkmark') && ($(event.target).attr('class') != undefined)) {
+     && ($(event.target).attr('class') != 'checkmark') && ($(event.target).attr('class') != undefined)
+     && ($(event.target).attr('class') != 'check_list')) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('._text_input').val()
@@ -249,7 +250,8 @@ $(document).ready(function(){
 
   $('.list').click(function(){
   	if((event.target === this || ($(event.target).attr('class') == '_list_title note_title')
-  	 || $(event.target).attr('class') == 'list_item' || ($(event.target).attr('class') == '_del_form') )
+  	 || $(event.target).attr('class') == 'list_item' || ($(event.target).attr('class') == '_del_form')
+  	 || ($(event.target).attr('class') == 'check_list'))
 //  	 && $(event.target).attr('class') != 'list_item'
   	 ) {
   		var list_item_text_arr = []
