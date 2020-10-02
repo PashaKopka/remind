@@ -118,6 +118,19 @@ class DelNoteView(View):
         return redirect('profile')
 
 
+class ChangeColorNoteView(View):
+
+    def post(self, request):
+        print(request.POST)
+        id = int(request.POST['id'])
+        color = request.POST['color']
+        note = Note.objects.get(id=id)
+        note.style = color
+        note.save()
+
+        return redirect('profile')
+
+
 # Lists
 
 class ListView(View):
@@ -237,7 +250,7 @@ class NewProjectView(View):
 
     def get(self, request):
         user = User.objects.get_by_natural_key(username=request.user.get_username())
-        project = Project.objects.create(user=user, title='-', date_of_adding=timezone.now())
+        project = Project.objects.create(user=user, title='Title', date_of_adding=timezone.now())
         project.save()
         return redirect('project_detail', project.id)
 

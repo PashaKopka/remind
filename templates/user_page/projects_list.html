@@ -17,7 +17,8 @@
     <section class="note_section">
         <div class="project_grid">
             {% for project in projects_list %}
-            <a value="{{ project.id }}" class="project {{ project.style }}" href="{% url 'project_detail' project.id %}">
+            <a value="{{ project.id }}" class="project {{ project.style }}"
+               href="{% url 'project_detail' project.id %}">
                 <form>{% csrf_token %}<span class="del_button"></span></form>
                 {% if project.title|length > 20 %}
                 <h4 class="project_title">{{ project.title|slice:":20" }}...</h4>
@@ -26,7 +27,9 @@
                 {% endif %}
             </a>
             {% empty %}
-            <h1 class="trouble_messege">it's too empty here. <span class="add_project_a">let's fix it</span></h1>
+            <h1 class="trouble_messege">it's too empty here. <a style="text-decoration: none;"
+                                                                href="{% url 'new_project' %}" class="add_project_a">let's
+                fix it</a></h1>
             {% endfor %}
         </div>
     </section>
@@ -69,6 +72,8 @@
 		})
 		$(this).closest('.project').remove()
 	})
+
+
 
 
 

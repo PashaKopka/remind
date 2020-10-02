@@ -1009,3 +1009,15 @@ section{
 .title_project_input{
     font-size: 28px;
 }
+
+.note .styling_block{
+    transform: scale(.5);
+    position: relative;
+    left: -84px;
+    top: 5px;
+    opacity: 0;
+    transition: .2s;
+}
+.note:hover .styling_block{
+    opacity: 1;
+}

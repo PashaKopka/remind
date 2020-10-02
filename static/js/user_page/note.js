@@ -61,7 +61,8 @@ $(document).ready(function(){
   if(($(event.target).attr('class') != '_label') && ($(event.target).attr('class') != '_label active_label')
      && ($(event.target).attr('class') != 'list_item') && ($(event.target).attr('class') != '_list_title note_title')
      && ($(event.target).attr('class') != 'checkbox') && ($(event.target).attr('class') != 'note list')
-     && ($(event.target).attr('class') != '_del_form')) {
+     && ($(event.target).attr('class') != '_del_form') && ($(event.target).attr('class') != 'styling_block')
+     && ($(event.target).attr('class') != 'checkmark') && ($(event.target).attr('class') != undefined)) {
     id = $(this).attr('value')
     title = $(this).find('h4').html()
     text = $(this).find('._text_input').val()
@@ -666,6 +667,26 @@ $(document).ready(function(){
 
 		});
 
+  })
+
+  $('.note .container input[name="color"]').click(function(){
+  	let color = $(this).prop('value')
+
+  	if (color == 'white'){
+  		$(this).closest('.note').css('background', '#fff')
+  	} else if (color == 'green'){
+  		$(this).closest('.note').css('background', '#B3FFEE')
+  	} else if (color == 'red'){
+  		$(this).closest('.note').css('background', '#F0A1B9')
+  	} else if (color == 'blue'){
+  		$(this).closest('.note').css('background-color', '#B1B5E0')
+  	} else if (color == 'fiolet'){
+  		$(this).closest('.note').css('background', '#E0B3FA')
+  	} else if (color == 'orange'){
+  		$(this).closest('.note').css('background', '#FDBBA2')
+  	} else if (color == 'roze'){
+  		$(this).closest('.note').css('background', '#FFAFD6')
+  	}
   })
 
 });
