@@ -1,12 +1,10 @@
-from datetime import datetime
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView as djLoginView
 from django.contrib.auth.views import LogoutView as djLogoutView
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import View
 from django.views.generic import CreateView
@@ -56,7 +54,24 @@ class ProfileView(View):
     def get(self, request):
         user = request.user
         query = request.GET.get('q')
-        if query:
+        color = request.GET.get('color')
+        print(color)
+        if query and color:
+            note_list = Note.objects.filter(
+                (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user.id) & Q(draft=False)
+                & Q(style=color)
+            )
+            list_list = List.objects.filter(
+                Q(title__icontains=query) & Q(user_id=user.id) & Q(draft=False)
+                & Q(style=color)
+            )
+            project_list = Project.objects.filter(
+                Q(title__icontains=query) & Q(user_id=user.id) & Q(draft=False)
+                & Q(style=color)
+            )
+            return render(request, 'user_page/search.html',
+                          {'note_list': note_list, 'list_list': list_list, 'project_list': project_list})
+        elif query:
             note_list = Note.objects.filter(
                 (Q(title__icontains=query) | Q(text__icontains=query)) & Q(user_id=user.id) & Q(draft=False)
             )
@@ -367,4 +382,6 @@ class BinView(View):
         user = request.user
         notes = Note.objects.filter(user=user, draft=True)
         lists = List.objects.filter(user=user, draft=True)
-        return render(request, 'user_page/bin.html', {'note_list': notes, 'lists_list': lists})
+        projects = Project.objects.filter(user=user, draft=True)
+        return render(request, 'user_page/bin.html',
+                      {'note_list': notes, 'lists_list': lists, 'project_list': projects})

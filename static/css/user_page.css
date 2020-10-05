@@ -470,9 +470,6 @@ section{
 }
 
 
-/*.check_list{
-	display: grid;
-}*/
 .list_item{
 	margin: 1px 0;
 	width: auto;
@@ -1020,4 +1017,18 @@ section{
 }
 .note:hover .styling_block{
     opacity: 1;
+}
+
+.search_section{
+    grid-template-columns: auto 50px;
+}
+.filter .styling_block{
+    display: flex;
+    flex-wrap: wrap;
+    width: 40px;
+    position: relative;
+    left: -10px;
+}
+.filter .styling_block .container{
+    margin-top: 40px;
 }

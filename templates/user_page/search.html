@@ -17,33 +17,77 @@
 
     {% include 'include/sitebar.html' %}
 
-    <section>
+    <section class="search_section">
         {% if note_list or list_list or project_list %}
 
         <h1 class="caption">Notes</h1>
         <div class="note_grid">
             {% for note in note_list %}
-            <div class="note" value="{{ note.id }}">
-                    <form>{% csrf_token %}<span class="note_del_button del_button"></span></form>
-                    <input type="hidden" value="{{ note.text }}">
-                    {% if note.title|length > 20 %}
-                    <h4 class="note_title">{{ note.title|slice:":20" }}...</h4>
-                    {% else %}
-                    <h4 class="note_title">{{ note.title }}</h4>
-                    {% endif %}
-                    {% if note.text|length >= 150 %}
-                    <p class="text">{{ note.text|slice:":150" }}...</p>
-                    {% else %}
-                    <p class="text">{{ note.text }}</p>
-                    {% endif %}
-                </div>
+            <div style="padding-bottom: 15px; display: grid; grid-template-columns: 215px; grid-template-rows: 0px 30px auto 20px;"
+                 class="{{ note.style }} note" value="{{ note.id }}">
+                <form>{% csrf_token %}<span class="note_del_button del_button"></span></form>
+                <input type="hidden" value="{{ note.text }}">
+                {% if note.title|length > 20 %}
+                <h4 class="note_title">{{ note.title|slice:":20" }}...</h4>
+                {% else %}
+                <h4 class="note_title">{{ note.title }}</h4>
+                {% endif %}
+                {% if note.text|length >= 150 %}
+                <p class="text">{{ note.text|slice:":150" }}...</p>
+                {% else %}
+                <p class="text">{{ note.text }}</p>
+                {% endif %}
+                <form>
+                    {% csrf_token %}
+
+                    <div class="styling_block">
+                        <label class="container">
+                            <input value='white' name="color" type="radio">
+                            <span id="white" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='green' name="color" type="radio">
+                            <span id="green" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='red' name="color" type="radio">
+                            <span id="red" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='blue' name="color" type="radio">
+                            <span id="blue" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='fiolet' name="color" type="radio">
+                            <span id="fiolet" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='orange' name="color" type="radio">
+                            <span id="orange" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='roze' name="color" type="radio">
+                            <span id="roze" class="checkmark"></span>
+                        </label>
+                    </div>
+
+                </form>
+
+            </div>
             {% endfor %}
         </div>
 
         <h1 class="caption">Lists</h1>
         <div class="list_grid note_grid">
             {% for list in list_list %}
-            <div class="note list" value="{{ list.id }}">
+            <div style="padding-bottom: 15px; display: grid; grid-template-columns: 215px; grid-template-rows: 0px 30px auto 20px;"
+                 class="{{ list.style }} note list" value="{{ list.id }}">
                 <form class="_del_form">{% csrf_token %}<span class="list_del_button del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
@@ -81,14 +125,55 @@
                     {% endwith %}
 
                 </div>
+                <form>
+                    {% csrf_token %}
+
+                    <div class="styling_block">
+                        <label class="container">
+                            <input value='white' name="color" type="radio">
+                            <span id="white" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='green' name="color" type="radio">
+                            <span id="green" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='red' name="color" type="radio">
+                            <span id="red" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='blue' name="color" type="radio">
+                            <span id="blue" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='fiolet' name="color" type="radio">
+                            <span id="fiolet" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='orange' name="color" type="radio">
+                            <span id="orange" class="checkmark"></span>
+                        </label>
+
+                        <label class="container">
+                            <input value='roze' name="color" type="radio">
+                            <span id="roze" class="checkmark"></span>
+                        </label>
+                    </div>
+
+                </form>
             </div>
             {% endfor %}
         </div>
 
         <h1 class="caption">Projects</h1>
-        <div class="project_grid">
+        <div style="grid-row: auto;" class="project_grid">
             {% for project in project_list %}
-            <div class="project" value="{{ project.id }}">
+            <div class="{{ project.style }} project" value="{{ project.id }}">
                 <input type="hidden" value="{{ project.text }}">
                 <h4 class="project_title">{{ project.title }}</h4>
             </div>
@@ -96,8 +181,49 @@
         </div>
 
         {% else %}
-        <h1 class="trouble_messege">Nothing to see here</h1>
+        <h1 style="grid-column: 1 / 3;" class="trouble_messege">Nothing to see here</h1>
         {% endif %}
+
+        <form class="filter" style="grid-column: 2 / 3; grid-row: 1 / 7;" method="get" action="{% url 'search' %}">
+
+            <div class="styling_block">
+                <label class="container">
+                    <input value='white' name="color" type="radio">
+                    <span id="white" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='green' name="color" type="radio">
+                    <span id="green" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='red' name="color" type="radio">
+                    <span id="red" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='blue' name="color" type="radio">
+                    <span id="blue" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='fiolet' name="color" type="radio">
+                    <span id="fiolet" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='orange' name="color" type="radio">
+                    <span id="orange" class="checkmark"></span>
+                </label>
+
+                <label class="container">
+                    <input value='roze' name="color" type="radio">
+                    <span id="roze" class="checkmark"></span>
+                </label>
+            </div>
+
+        </form>
 
     </section>
 
@@ -159,6 +285,47 @@
         })
         $(this).closest('.note').remove()
     })
+
+    $('.list .container input[name="color"]').click(function() {
+
+		$.ajax({
+			type: 'POST',
+			url: '/userpage/lists/color/',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				color: $(this).val(),
+				id: $(this).closest('.note').attr('value')
+			},
+			success:function(){
+
+			}
+		})
+	});
+
+    $('.note .container input[name="color"]').click(function() {
+
+		$.ajax({
+			type: 'POST',
+			url: '/userpage/color/',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				color: $(this).val(),
+				id: $(this).closest('.note').attr('value')
+			},
+			success:function(){
+
+			}
+		})
+	});
+
+    $('.project').click(function() {
+        window.location.href = "/userpage/project_detail/" + $(this).attr("value") + "/";
+    });
+
+    $('.filter .container input[name="color"]').click(function() {
+        window.location.href = "/userpage/?q={{ request.GET.q }}&color=" + $(this).val();
+	});
+
 
 </script>
 

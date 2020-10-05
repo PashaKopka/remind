@@ -23,7 +23,7 @@
         <h1 class="caption">Notes</h1>
         <div class="note_grid">
             {% for note in note_list %}
-            <div class="note" value="{{ note.id }}">
+            <div class="{{ note.style }} note" value="{{ note.id }}">
                 <form>{% csrf_token %}<span class="note_del_button del_button"></span></form>
                 <input type="hidden" value="{{ note.text }}">
                 {% if note.title|length > 20 %}
@@ -43,7 +43,7 @@
         <h1 class="caption">Lists</h1>
         <div class="list_grid note_grid">
             {% for list in lists_list %}
-            <div class="note list" value="{{ list.id }}">
+            <div class="{{ list.style }} note list" value="{{ list.id }}">
                 <form class="_del_form">{% csrf_token %}<span class="list_del_button del_button"></span></form>
                 <input class="hidden_value" type="hidden" value="{{ list.list }}">
                 {% if list.title|length > 20 %}
@@ -86,9 +86,10 @@
         </div>
 
         <h1 class="caption">Projects</h1>
-        <div class="project_grid">
+        <div style="grid-row: auto;" class="project_grid">
             {% for project in project_list %}
-            <div class="project" value="{{ project.id }}">
+            <div class="{{ project.style }} project" value="{{ project.id }}">
+                <form>{% csrf_token %}<span class="del_button"></span></form>
                 <input type="hidden" value="{{ project.text }}">
                 <h4 class="project_title">{{ project.title }}</h4>
             </div>
@@ -158,6 +159,24 @@
         })
         $(this).closest('.note').remove()
     })
+
+    $('.del_button').click(function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type: 'POST',
+			url: 'project_del',
+			data: {
+			    csrfmiddlewaretoken: getCookie('csrftoken'),
+				id: $(this).closest('.project').attr('value'),
+				_del: 1
+			},
+			success:function(){
+
+			}
+		})
+		$(this).closest('.project').remove()
+	})
 
 
 </script>

@@ -24,7 +24,7 @@ SECRET_KEY = 'd#bhj-j*wyb$x$e!g9aui7)=g46))auy+ioc-g@tkw@#+-!8vr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['opchika.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
 
@@ -90,6 +90,15 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'opchika$remind',
+#         'USER': 'opchika',
+#         'PASSWORD': 'zxcvbnm,./',
+#         'DATABASE_HOST': 'opchika.mysql.pythonanywhere-services.com'
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
