@@ -1,6 +1,6 @@
 {% load static %}
 <header>
-    {% if request.user is None %}
+    {% if request.user.is_authenticated %}
     <div class="burger_button">
         <span></span>
     </div>
@@ -8,7 +8,7 @@
     <div class="logo">
         <a href="/" style="background-image: url('{% static 'img/user_page/logo.png' %}')" class="logo_url"></a>
     </div>
-    {% if request.user is None %}
+    {% if request.user.is_authenticated %}
     <div class="search">
         <div class="search_icon"><i class="fa fa-search" style="font-family:'Roboto', sans-serif, FontAwesome"></i>
         </div>
@@ -22,3 +22,4 @@
     </div>
     {% endif %}
 </header>
+<h1 style="font-size: 30px;">{{ request.user }}</h1>
