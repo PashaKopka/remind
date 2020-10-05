@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'user_page/base.html' %}
+{% load filter_tags %}
+{% load static %}
+{% block notes %}
 
-<a href="{% url 'login' %}">LogIn</a>
-<a href="{% url 'signin' %}">SignIn</a>
+<div class="main_container">
+    <div class="home_usrls">
+        <a href="{% url 'login' %}">LogIn</a>
+        <a href="{% url 'signin' %}">SignIn</a>
+    </div>
 
-</body>
-</html>
+
+</div>
+
+{% endblock notes %}

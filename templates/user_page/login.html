@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+{% extends 'user_page/base.html' %}
+{% load filter_tags %}
+{% load static %}
+{% block notes %}
 
-<form id="signin_form" method="post">
+
+<div class="main_container">
+
+{% include 'include/sitebar.html' %}
+<form id="login_form" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Submit</button>
 </form>
 
-</body>
-</html>
+</div>
+
+{% endblock notes %}
