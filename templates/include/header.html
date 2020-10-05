@@ -1,11 +1,14 @@
 {% load static %}
 <header>
+    {% if request.user is None %}
     <div class="burger_button">
         <span></span>
     </div>
+    {% endif %}
     <div class="logo">
         <a href="/" style="background-image: url('{% static 'img/user_page/logo.png' %}')" class="logo_url"></a>
     </div>
+    {% if request.user is None %}
     <div class="search">
         <div class="search_icon"><i class="fa fa-search" style="font-family:'Roboto', sans-serif, FontAwesome"></i>
         </div>
@@ -17,4 +20,5 @@
         <a href="" class="button">Settings</a>
         <a href="{% url 'logout' %}" class="button logout_button">Logout</a>
     </div>
+    {% endif %}
 </header>
