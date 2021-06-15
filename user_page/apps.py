@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class UserPageConfig(AppConfig):
-    name = 'user_page
+    name = 'user_page'
