@@ -30,15 +30,16 @@ ALLOWED_HOSTS = ['opchika.pythonanywhere.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'home',
+    'user_page',
+    'main',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'home',
-    'user_page',
 ]
 
 MIDDLEWARE = [
