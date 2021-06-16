@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-from my_settings import *
+from .my_settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -88,19 +88,10 @@ DATABASES = {
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
-        'PORT': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'opchika$remind',
-#         'USER': 'opchika',
-#         'PASSWORD': 'zxcvbnm,./',
-#         'HOST': 'opchika.mysql.pythonanywhere-services.com'
-#     }
-# }
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
