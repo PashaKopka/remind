@@ -54,4 +54,42 @@ form#sign_up_form{
 #username{
 	font-family: arial;
 	margin-left: 20px;
+	line-height:  10px;
+	border-bottom: 1px dashed #212529;
+}
+
+#username:hover{
+	border-bottom: 1px dashed #BABBAB;
+}
+#left-bar{
+	background: #212529!important;
+	position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    padding-top: 22px;
+}
+
+.left-bar-link{
+	font-size: 22px!important;
+	height: 66px!important;
+	width: 72px!important;
+	border-radius: .5rem!important;
+	border-bottom: 0px solid #fff!important;
+	border-top-right-radius: 0!important;
+	border-bottom-right-radius: 0!important;
+}
+.left-bar-link .left-bar-link-text{
+	display: none;
+	background-color: #212529;
+	position: relative;
+	font-size: 12px;
+	left: 60px;
+	top: -35px;
+	padding: 5px 10px;
+	border-radius: .25rem;
+	color: #fff;
+}
+.left-bar-link:hover .left-bar-link-text{
+	display: inline;
 }

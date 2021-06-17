@@ -1,0 +1,51 @@
+<div class="d-flex flex-column flex-shrink-0 bg-light" id="left-bar" style="width: 4.5rem;">
+    <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip"
+       data-bs-placement="right" data-bs-original-title="Icon-only">
+        <svg class="bi" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
+        <span class="visually-hidden">Icon-only</span>
+    </a>
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li>
+            {% if request.get_full_path == '/user_page/notes/' %}
+            <a href="{% url 'user_page_notes' %}" class="left-bar-link nav-link active py-3 border-bottom">
+                {% else %}
+                <a href="{% url 'user_page_notes' %}" class="left-bar-link nav-link py-3 border-bottom">
+                    {% endif %}
+                    <i class="far fa-sticky-note"></i>
+                    <span class="left-bar-link-text">Notes</span>
+                </a>
+        </li>
+        <li>
+            {% if request.get_full_path == '/user_page/lists/' %}
+            <a href="{% url 'user_page_lists' %}" class="left-bar-link nav-link active py-3 border-bottom">
+                {% else %}
+                <a href="{% url 'user_page_lists' %}" class="left-bar-link nav-link py-3 border-bottom">
+                    {% endif %}
+                <i class="fas fa-tasks"></i>
+                <span class="left-bar-link-text">Lists</span>
+            </a>
+        </li>
+        <li>
+            {% if request.get_full_path == '/user_page/projects/' %}
+            <a href="{% url 'user_page_projects' %}" class="left-bar-link nav-link active py-3 border-bottom">
+                {% else %}
+                <a href="{% url 'user_page_projects' %}" class="left-bar-link nav-link py-3 border-bottom">
+                    {% endif %}
+                <i class="fas fa-stream"></i>
+                <span class="left-bar-link-text">Projects</span>
+            </a>
+        </li>
+        <li>
+            {% if request.get_full_path == '/user_page/trash/' %}
+            <a href="{% url 'user_page_trash' %}" class="left-bar-link nav-link active py-3 border-bottom">
+                {% else %}
+                <a href="{% url 'user_page_trash' %}" class="left-bar-link nav-link py-3 border-bottom">
+                    {% endif %}
+                <i class="far fa-trash-alt"></i>
+                <span class="left-bar-link-text">Trash</span>
+            </a>
+        </li>
+    </ul>
+</div>

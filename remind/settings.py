@@ -31,7 +31,6 @@ ALLOWED_HOSTS = ['opchika.pythonanywhere.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'home',
-    'user_page',
     'main',
 
     'django.contrib.admin',

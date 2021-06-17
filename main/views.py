@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
@@ -38,7 +38,7 @@ class SignUpView(View):
             if user is not None:
                 user.last_login = now()
                 login(request, user)
-        return redirect('homepage')
+        return redirect('user_page_notes')
 
 
 class LogInView(View):
@@ -54,4 +54,37 @@ class LogInView(View):
         if user is not None:
             user.last_login = now()
             login(request, user)
+        return redirect('user_page_notes')
+
+
+class LogOutView(View):
+
+    def get(self, request):
+        logout(request)
         return redirect('homepage')
+
+
+# User pages
+
+class NotesView(View):
+
+    def get(self, request):
+        return render(request, 'main/notes.html')
+
+
+class ListsView(View):
+
+    def get(self, request):
+        return render(request, 'main/lists.html')
+
+
+class ProjectsView(View):
+
+    def get(self, request):
+        return render(request, 'main/projects.html')
+
+
+class TrashView(View):
+
+    def get(self, request):
+        return render(request, 'main/trash.html')
