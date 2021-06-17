@@ -13,6 +13,7 @@ class File(m.Model):
 
 
 class Style(m.Model):
+    title = m.CharField(max_length=50, default='')
     background = m.CharField(max_length=50)
     font_color = m.CharField(max_length=50)
     font_size = m.IntegerField()
@@ -100,16 +101,16 @@ class User(djUser):
     notes = m.ManyToManyField(Note, related_name='user_notes')
     lists = m.ManyToManyField(List, related_name='user_lists')
     projects = m.ManyToManyField(Project, related_name='user_projects')
-    settings = m.ForeignKey(Settings, related_name='user_settings', on_delete=m.CASCADE)
+    settings = m.ForeignKey(Settings, related_name='user_settings', on_delete=m.CASCADE, null=True)
 
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password, settings):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             username=username,
             email=self.normalize_email(email),
-            last_login=now(),
+            settings=settings
         )
 
         user.set_password(password)
