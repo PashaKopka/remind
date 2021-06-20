@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 remind/my_settings.py
+media/

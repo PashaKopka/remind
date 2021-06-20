@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Note
 
 
 class SignUpForm(forms.ModelForm):
@@ -18,3 +18,9 @@ class LogInForm(forms.ModelForm):
         help_texts = {
             'username': None,
         }
+
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ('text', )

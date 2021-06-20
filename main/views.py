@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.views.generic.base import View
-from .forms import SignUpForm, LogInForm
-from .models import User, Settings, Style
+from .forms import SignUpForm, LogInForm, NoteForm
+from .models import User, Settings, Style, File, Note
 
 
 # Homepage
@@ -69,7 +69,27 @@ class LogOutView(View):
 class NotesView(View):
 
     def get(self, request):
-        return render(request, 'main/notes.html')
+        username = request.user.username
+        user = User.objects.get(username=username)
+        notes = user.notes.all()
+        return render(request, 'main/notes.html', {'notes': notes})
+
+    def post(self, request):
+        user = User.objects.get(username=request.user.username)
+
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            title = request.POST['title']
+            text = request.POST['text']
+            note = Note.objects.create(title=title, text=text)
+            if request.FILES:
+                for input_file in request.FILES.getlist('files'):
+                    file = File.objects.create(file=input_file)
+                    note.files.add(file)
+
+            user.notes.add(note)
+
+        return redirect('user_page_notes')
 
 
 class ListsView(View):

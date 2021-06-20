@@ -50,8 +50,8 @@ class ListElement(m.Model):
 class AbstractRemind(m.Model):
     style = m.ManyToManyField(Style, blank=False)
     date_of_creation = m.DateField(verbose_name='date_of_creation_remind', default=now(), blank=False)
-    date_of_change = m.DateField(verbose_name='date_of_changing_remind', blank=True)
-    draft = m.BooleanField()
+    date_of_change = m.DateField(verbose_name='date_of_changing_remind', blank=True, null=True)
+    draft = m.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -98,9 +98,9 @@ class Settings(m.Model):
 
 
 class User(djUser):
-    notes = m.ManyToManyField(Note, related_name='user_notes')
-    lists = m.ManyToManyField(List, related_name='user_lists')
-    projects = m.ManyToManyField(Project, related_name='user_projects')
+    notes = m.ManyToManyField(Note, related_name='user_notes', blank=True)
+    lists = m.ManyToManyField(List, related_name='user_lists', blank=True)
+    projects = m.ManyToManyField(Project, related_name='user_projects', blank=True)
     settings = m.ForeignKey(Settings, related_name='user_settings', on_delete=m.CASCADE, null=True)
 
     def create_user(self, username, email, password, settings):

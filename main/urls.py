@@ -17,4 +17,6 @@ urlpatterns = [
     path('user_page/lists/', ListsView.as_view(), name='user_page_lists'),
     path('user_page/projects/', ProjectsView.as_view(), name='user_page_projects'),
     path('user_page/trash/', TrashView.as_view(), name='user_page_trash'),
+
+    path('user_page/notes/create_new_note/', NotesView.as_view(), name='create_new_note'),
 ]
