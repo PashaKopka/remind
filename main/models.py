@@ -1,11 +1,38 @@
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models as m
 from django.contrib.auth.models import User as djUser
 from django.utils.timezone import now
+from PIL import Image, UnidentifiedImageError
+
+from remind.settings import BASE_DIR, FILE_FORMATS, DEFAULT_FILE_ICON
 
 
 class File(m.Model):
+    filename = m.CharField(max_length=150, default='file')
     file = m.FileField(upload_to='uploads/%Y/%m/%d', blank=False)
+    icon = m.CharField(max_length=100, default=DEFAULT_FILE_ICON)
     datetime = m.DateTimeField(default=now())
+
+    @staticmethod
+    def create_file(input_file: InMemoryUploadedFile):
+        file_format = input_file.name.split('.')[-1]
+        icon = DEFAULT_FILE_ICON
+        if file_format in FILE_FORMATS:
+            icon = FILE_FORMATS[file_format]
+        file = File.objects.create(
+            filename=input_file.name,
+            file=input_file,
+            icon=icon
+        )
+
+        return file
+
+    def is_image(self):
+        try:
+            Image.open(BASE_DIR.__str__() + self.file.url)
+        except UnidentifiedImageError:
+            return False
+        return True
 
     class Meta:
         verbose_name = 'File'
@@ -61,6 +88,9 @@ class Note(AbstractRemind):
     title = m.CharField(max_length=50, blank=True)
     text = m.TextField(blank=False)
     files = m.ManyToManyField(File, blank=True)
+
+    def get_files(self):
+        return self.files.all()
 
     class Meta:
         verbose_name = 'Note'

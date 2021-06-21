@@ -132,3 +132,33 @@ STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+FILE_FORMATS = {
+    'doc': 'fas fa-file-word',
+    'docm': 'fas fa-file-word',
+    'docx': 'fas fa-file-word',
+    'dot': 'fas fa-file-word',
+    'dotm': 'fas fa-file-word',
+    'dotx': 'fas fa-file-word',
+    'htm': 'fas fa-file-code',
+    'html': 'fas fa-file-code',
+    'pdf': 'fas fa-file-pdf',
+    'csv': 'fas fa-file-csv',
+    'xla': 'fas fa-file-excel',
+    'xlam': 'fas fa-file-excel',
+    'xls': 'fas fa-file-excel',
+    'xlsb': 'fas fa-file-excel',
+    'xlsm': 'fas fa-file-excel',
+    'xlsx': 'fas fa-file-excel',
+    'xlt': 'fas fa-file-excel',
+    'xltm': 'fas fa-file-excel',
+    'xltx': 'fas fa-file-excel',
+    'xlw': 'fas fa-file-excel',
+    'pptx': 'fas fa-file-powerpoint',
+    'pptm': 'fas fa-file-powerpoint',
+    'ppt': 'fas fa-file-powerpoint',
+    'ppsx': 'fas fa-file-powerpoint',
+    'mp3': 'fas fa-file-audio',
+    'mp4': 'fas fa-file-video',
+}
+DEFAULT_FILE_ICON = 'fas fa-file-alt'

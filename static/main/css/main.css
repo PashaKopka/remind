@@ -148,3 +148,51 @@ form#sign_up_form{
 	border: 5px dashed #BABBAB;
 	width: 100%;
 }
+.note-image-card{
+	border-top-right-radius: 0px!important;
+	border-top-left-radius: 0px!important;
+}
+.card{
+	border-radius: 10px;
+}
+.card-img-top{
+	border-top-right-radius: 10px!important;
+	border-top-left-radius: 10px!important;
+	background-position: center!important;
+	background-repeat: no-repeat!important;
+}
+.note-file-block-link{
+	width: 100%;
+    border: 1px solid #0D6EFD;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+}
+.note-file-block-link span{
+	text-decoration: none;
+	color: #0D6EFD;
+}
+.note-file-block-link i{
+	color: #0D6EFD;
+	font-size: 30px;
+	margin-right: 10px;
+}
+.note-file-block-link::after{
+	content: '';
+	position: absolute;
+    width: 110%;
+    height: 110%;
+    background: rgba(0,0,0,0.1);
+    left: -2px;
+    top: -2px;
+    transition: opacity 0.2s;
+    
+    opacity: 0;
+}
+.note-file-block-link:hover::after {
+    opacity: 1;
+}

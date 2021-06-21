@@ -84,7 +84,7 @@ class NotesView(View):
             note = Note.objects.create(title=title, text=text)
             if request.FILES:
                 for input_file in request.FILES.getlist('files'):
-                    file = File.objects.create(file=input_file)
+                    file = File.create_file(input_file=input_file)
                     note.files.add(file)
 
             user.notes.add(note)
