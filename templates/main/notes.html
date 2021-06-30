@@ -10,35 +10,37 @@
     <div class="row" id="notes-block" data-masonry="{&quot;percentPosition&quot;: true }" style="height: 688px;">
         {% for note in notes %}
         <div class="note-block col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3323%; top: 0px;">
-                {% if note.get_files|length > 0 %}
-                    {% if note.get_files.0.is_image %}
-                        <div id="article_poster" class="bd-placeholder-img card-img-top"
-                             style="background: url('{{ note.get_files.0.file.url }}');"></div>
-                        <div class="note-image-card card p-3">
-                    {% else %}
-                        <div class="card p-3">
-                        <a href="{{ note.get_files.0.file.url }}" class="note-file-block-link">
-                            <i class="fas fa-file-alt"></i>
-                            <span class="file-icon">{{ note.get_files.0.filename }}</span>
-                        </a>
-                    {% endif %}
+            <input name="id" value="{{ note.id }}" type="hidden">
+            {% if note.get_files|length > 0 %}
+            {% if note.get_files.0.is_image %}
+            <div id="article_poster" class="bd-placeholder-img card-img-top"
+                 style="background: url('{{ note.get_files.0.file.url }}');"></div>
+            <div class="note-image-card card p-3">
                 {% else %}
+                <div class="card p-3">
+                    <a href="{{ note.get_files.0.file.url }}" class="note-file-block-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="file-icon">{{ note.get_files.0.filename }}</span>
+                    </a>
+                    {% endif %}
+                    {% else %}
                     <div class="card p-3">
-                {% endif %}
-                    <figure class="p-3 mb-0">
-                        <blockquote class="blockquote">
-                            <p>{{ note.title }}</p>
-                        </blockquote>
-                        <figcaption class="blockquote-footer mb-0 text-muted">
-                            {{ note.text }}
-                        </figcaption>
-                    </figure>
+                        {% endif %}
+                        <figure class="p-3 mb-0">
+                            <blockquote class="blockquote">
+                                <p>{{ note.title }}</p>
+                            </blockquote>
+                            <figcaption class="blockquote-footer mb-0 text-muted">
+                                {{ note.text }}
+                            </figcaption>
+                        </figure>
+                    </div>
                 </div>
+                {% endfor %}
+
             </div>
-            {% endfor %}
 
         </div>
-
     </div>
 </main>
 
@@ -75,6 +77,8 @@
         <div class="modal-content">
             <form action="{% url 'create_new_note' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
+                <input id="note-id" name="id" type="hidden">
+                <input name="edit" value="True" type="hidden">
                 <div id="note-header" class="modal-header">
                     <input name="title" type="text" id="note-title" placeholder="Title">
                 </div>

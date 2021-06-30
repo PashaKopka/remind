@@ -81,13 +81,19 @@ class NotesView(View):
         if form.is_valid():
             title = request.POST['title']
             text = request.POST['text']
-            note = Note.objects.create(title=title, text=text)
-            if request.FILES:
-                for input_file in request.FILES.getlist('files'):
-                    file = File.create_file(input_file=input_file)
-                    note.files.add(file)
+            if 'edit' in request.POST:
+                note = Note.objects.get(id=request.POST['id'])
+                note.title = title
+                note.text = text
+                note.save()
+            else:
+                note = Note.objects.create(title=title, text=text)
+                if request.FILES:
+                    for input_file in request.FILES.getlist('files'):
+                        file = File.create_file(input_file=input_file)
+                        note.files.add(file)
 
-            user.notes.add(note)
+                user.notes.add(note)
 
         return redirect('user_page_notes')
 
