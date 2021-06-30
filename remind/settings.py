@@ -160,5 +160,6 @@ FILE_FORMATS = {
     'ppsx': 'fas fa-file-powerpoint',
     'mp3': 'fas fa-file-audio',
     'mp4': 'fas fa-file-video',
+    'psd': 'fas fa-file-image',
 }
 DEFAULT_FILE_ICON = 'fas fa-file-alt'

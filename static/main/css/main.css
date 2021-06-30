@@ -160,6 +160,7 @@ form#sign_up_form{
 	border-top-left-radius: 10px!important;
 	background-position: center!important;
 	background-repeat: no-repeat!important;
+	transition: .2s;
 }
 .note-file-block-link{
 	width: 100%;
@@ -195,4 +196,13 @@ form#sign_up_form{
 }
 .note-file-block-link:hover::after {
     opacity: 1;
+}
+.card{
+	transition: .2s;
+}
+.card:hover{
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.card-img-top:hover ~ .card{
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
