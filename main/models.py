@@ -15,6 +15,11 @@ class File(m.Model):
 
     @staticmethod
     def create_file(input_file: InMemoryUploadedFile):
+        """
+        Function for creation new File object
+        :param input_file: input file from request.FILES
+        :return: created File object
+        """
         file_format = input_file.name.split('.')[-1]
         icon = DEFAULT_FILE_ICON
         if file_format in FILE_FORMATS:
@@ -28,6 +33,10 @@ class File(m.Model):
         return file
 
     def is_image(self):
+        """
+        Function check if file of user is image
+        :return: if file is image: True else: False
+        """
         try:
             Image.open(BASE_DIR.__str__() + self.file.url)
         except UnidentifiedImageError:
@@ -90,6 +99,9 @@ class Note(AbstractRemind):
     files = m.ManyToManyField(File, blank=True)
 
     def get_files(self):
+        """
+        :return: list of files of note object
+        """
         return self.files.all()
 
     class Meta:
@@ -134,8 +146,18 @@ class User(djUser):
     settings = m.ForeignKey(Settings, related_name='user_settings', on_delete=m.CASCADE, null=True)
 
     def create_user(self, username, email, password, settings):
+        """
+        Function for creation new user
+        :param username: username that choose user
+        :param email: user email, it is required
+        :param password: user password, it is required
+        :param settings: user default setting object
+        :return:
+        """
         if not email:
             raise ValueError('Users must have an email address')
+        if not password:
+            raise ValueError('Users must have a password')
 
         user = self.model(
             username=username,
