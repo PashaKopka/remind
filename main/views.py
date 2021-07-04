@@ -117,13 +117,27 @@ class NotesView(View):
         if form.is_valid():
             id, title, text, files_list = self.get_request_data(request)
             if 'edit' in request.POST:
-                self.update_existing_note(id, title, text)
+                self.update_existing_note(request, id, title, text, files_list)
             else:
                 note = Note.objects.create(title=title, text=text)
                 self.add_files_to_note(request, note, files_list)
                 user.notes.add(note)
 
         return redirect('user_page_notes')
+
+    def update_existing_note(self, request, id, title, text, files_list):
+        """
+        Function update existing note and save changes
+        :param id: id of Note object
+        :param title: new title
+        :param text: new text
+        :return: None
+        """
+        note = Note.objects.get(id=id)
+        note.title = title
+        note.text = text
+        self.add_files_to_note(request, note, files_list)
+        note.save()
 
     @staticmethod
     def add_files_to_note(request, note, files_list):
@@ -138,20 +152,6 @@ class NotesView(View):
             for input_file in files_list:
                 file = File.create_file(input_file=input_file)
                 note.files.add(file)
-
-    @staticmethod
-    def update_existing_note(id, title, text):
-        """
-        Function update existing note and save changes
-        :param id: id of Note object
-        :param title: new title
-        :param text: new text
-        :return: None
-        """
-        note = Note.objects.get(id=id)
-        note.title = title
-        note.text = text
-        note.save()
 
     @staticmethod
     def get_request_data(request):

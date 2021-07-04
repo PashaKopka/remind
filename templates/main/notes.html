@@ -26,10 +26,10 @@
                                 {% for file in note.get_files %}
                                     {% if file.is_image %}
                                     <div class="note-detail-image"
-                                        style="background: url('{{ note.get_files.0.file.url }}');"></div>
+                                        style="background: url('{{ file.file.url }}');"></div>
                                     {% else %}
                                     <a href="{{ file.file.url }}" class="edit-note-file note-file-block-link">
-                                        <i class="fas fa-file-alt"></i>
+                                        <i class="{{ file.icon }}"></i>
                                         <span class="file-icon">{{ file.filename }}</span>
                                     </a>
                                     {% endif %}
@@ -56,7 +56,7 @@
                 {% else %}
                 <div class="card p-3">
                     <a href="{{ note.get_files.0.file.url }}" class="note-file-block-link">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="{{ note.get_files.0.icon }}"></i>
                         <span class="file-icon">{{ note.get_files.0.filename }}</span>
                     </a>
                     {% endif %}

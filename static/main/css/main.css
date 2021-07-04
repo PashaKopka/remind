@@ -216,7 +216,7 @@ form#sign_up_form{
 	margin: 10px;
 	border-radius: 4px;
 	height: 300px;
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
+	background-position: center!important;
+	background-size: auto!important;
+	background-repeat: no-repeat!important;
 }
