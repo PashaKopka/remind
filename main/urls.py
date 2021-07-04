@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Notes creating, changing and viewing
     path('user_page/notes/', NotesView.as_view(), name='user_page_notes'),
-    path('user_page/notes/create_new_note/', NotesView.as_view(), name='create_new_note'),
+    path('user_page/notes/create_or_update_note/', NotesView.as_view(), name='create_or_update_note'),
 
     # Lists creating, changing and viewing
     path('user_page/lists/', ListsView.as_view(), name='user_page_lists'),

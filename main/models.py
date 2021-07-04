@@ -104,6 +104,9 @@ class Note(AbstractRemind):
         """
         return self.files.all()
 
+    def get_text(self):
+        return self.text if len(self.text) < 600 else self.text[:597] + '...'
+
     class Meta:
         verbose_name = 'Note'
         verbose_name_plural = 'Notes'

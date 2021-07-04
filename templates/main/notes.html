@@ -10,6 +10,43 @@
     <div class="row" id="notes-block" data-masonry="{&quot;percentPosition&quot;: true }" style="height: 688px;">
         {% for note in notes %}
         <div class="note-block col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 33.3323%; top: 0px;">
+            <div class="modal fade" id="edit-note-modal" tabindex="-1" role="dialog" aria-labelledby="add-note-modal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="{% url 'create_or_update_note' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input id="note-id" name="id" type="hidden" value="{{ note.id }}">
+                            <input name="edit" value="True" type="hidden">
+                            <div id="note-header" class="modal-header">
+                                <input name="title" type="text" id="note-title" placeholder="Title" value="{{ note.title }}">
+                            </div>
+                            <div id="note-body" class="modal-body">
+                                <textarea class="resize-ta" name="text" id="note-text-edit"
+                                          placeholder="Text">{{ note.text }}</textarea>
+                                {% for file in note.get_files %}
+                                    {% if file.is_image %}
+                                    <div class="note-detail-image"
+                                        style="background: url('{{ note.get_files.0.file.url }}');"></div>
+                                    {% else %}
+                                    <a href="{{ file.file.url }}" class="edit-note-file note-file-block-link">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span class="file-icon">{{ file.filename }}</span>
+                                    </a>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="custom-file">
+                                    <input name="files" id="note-files" multiple="true" type="file"
+                                           class="custom-file-input"
+                                           id="customFile">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <input name="id" value="{{ note.id }}" type="hidden">
             {% if note.get_files|length > 0 %}
             {% if note.get_files.0.is_image %}
@@ -31,16 +68,12 @@
                                 <p>{{ note.title }}</p>
                             </blockquote>
                             <figcaption class="blockquote-footer mb-0 text-muted">
-                                {{ note.text }}
+                                {{ note.get_text }}
                             </figcaption>
                         </figure>
                     </div>
                 </div>
-                {% endfor %}
-
-            </div>
-
-        </div>
+        {% endfor %}
     </div>
 </main>
 
@@ -49,41 +82,15 @@
 <!-- Modal -->
 <div class="modal fade" id="add-note-modal" tabindex="-1" role="dialog" aria-labelledby="add-note-modal"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{% url 'create_new_note' %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'create_or_update_note' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div id="note-header" class="modal-header">
                     <input name="title" type="text" id="note-title" placeholder="Title">
                 </div>
                 <div id="note-body" class="modal-body">
-                    <textarea name="text" id="note-text" placeholder="Text"></textarea>
-                    <div class="custom-file">
-                        <input name="files" id="note-files" multiple="true" type="file" class="custom-file-input"
-                               id="customFile">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="edit-note-modal" tabindex="-1" role="dialog" aria-labelledby="add-note-modal"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <form action="{% url 'create_new_note' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input id="note-id" name="id" type="hidden">
-                <input name="edit" value="True" type="hidden">
-                <div id="note-header" class="modal-header">
-                    <input name="title" type="text" id="note-title" placeholder="Title">
-                </div>
-                <div id="note-body" class="modal-body">
-                    <textarea name="text" id="note-text" placeholder="Text"></textarea>
+                    <textarea class="resize-ta" name="text" id="note-text-add" placeholder="Text"></textarea>
                     <div class="custom-file">
                         <input name="files" id="note-files" multiple="true" type="file" class="custom-file-input"
                                id="customFile">

@@ -4,13 +4,19 @@ $(document).ready(function(){
 	});
 
 	$('.note-block').click(function() {
-		let title = $(this).find('blockquote p').text().trim();
-		let text = $(this).find('figcaption').text().trim();
-		let id = $(this).find('input[name="id"]').val();
+        $(this).find('#edit-note-modal').modal('show');
 
-		$('#edit-note-modal #note-title').val(title);
-		$('#edit-note-modal #note-text').val(text);
-		$('#edit-note-modal #note-id').val(id);
-		$('#edit-note-modal').modal('show');
+        setTimeout(() => {
+            let scrollHeight = $('#edit-note-modal #note-text-edit').prop('scrollHeight');
+            if (scrollHeight > 300) {
+                $(this).find('#note-text-edit').height(scrollHeight)
+            }
+		}, 170);
 	});
+
+	let textarea = $('#note-text-edit');
+    textarea.keyup(function() {
+        innerHeight = textarea.prop('scrollHeight');
+        textarea.height(innerHeight);
+    });
 });

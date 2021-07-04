@@ -130,7 +130,8 @@ form#sign_up_form{
 #note-body{
 	padding: 0!important;
 }
-#note-text,
+#note-text-add,
+#note-text-edit,
 #note-title{
 	width: 100%;
 	height: 50px;
@@ -138,9 +139,10 @@ form#sign_up_form{
 	border: 0px solid #fff;
 	outline: none;
 }
-#note-text{
+#note-text-add,
+#note-text-edit,{
 	padding: 20px;
-	min-height: 400px;
+	min-height: 300px!important;
 }
 #note-files{
 	cursor: pointer;
@@ -205,4 +207,16 @@ form#sign_up_form{
 }
 .card-img-top:hover ~ .card{
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.edit-note-file{
+	margin: 10px;
+	width: calc( 100% - 20px );
+}
+.note-detail-image{
+	margin: 10px;
+	border-radius: 4px;
+	height: 300px;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
